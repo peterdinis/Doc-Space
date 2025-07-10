@@ -1,118 +1,117 @@
 'use client';
 
-import { FileText, Loader2 } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import Link from 'next/link';
-import { SetStateAction, useState, type FC } from 'react';
+import { FC } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRegister } from '@/hooks/auth/useAuth';
-import { useRouter } from 'next/navigation';
+
+const registerSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const RegisterForm: FC = () => {
-	const register = useRegister();
-	const [form, setForm] = useState({
-		name: '',
-		email: '',
-		password: '',
-	});
-	const [error, setError] = useState<string | null>(null);
-	const router = useRouter();
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setForm({ ...form, [e.target.name]: e.target.value });
-	};
+  const registerMutation = useRegister();
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+  });
 
-		if (!form.name.trim() || !form.email.trim() || !form.password.trim()) {
-			setError('All fields are required.');
-			return;
-		}
+  const onSubmit = (data: RegisterFormValues) => {
+    registerMutation.mutate(data);
+  };
 
-		setError(null);
-		register.mutate(form, {
-			onError: (err: { message: SetStateAction<string | null>; }) => setError(err.message),
-			onSuccess: (data) => {
-				router.push("/login")
-			},
-		});
-	};
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+        <div className="text-center">
+          <div className="flex justify-center mb-4">
+            <FileText className="h-12 w-12 text-blue-600" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">DocSpace</h2>
+          <p className="mt-2 text-gray-600">Create your account</p>
+        </div>
 
-	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-50">
-			<div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-				<div className="text-center">
-					<div className="flex justify-center mb-4">
-						<FileText className="h-12 w-12 text-blue-600" />
-					</div>
-					<h2 className="text-3xl font-bold text-gray-900">DocSpace</h2>
-					<p className="mt-2 text-gray-600">Create your account</p>
-				</div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="name">Full name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Enter your full name"
+                {...register('name')}
+                className="mt-2"
+              />
+              {errors.name && (
+                <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
+              )}
+            </div>
 
-				<form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-					<div className="space-y-4">
-						<div>
-							<Label htmlFor="name">Full name</Label>
-							<Input
-								id="name"
-								name="name"
-								type="text"
-								required
-								placeholder="Enter your full name"
-								className="mt-2"
-								value={form.name}
-								onChange={handleChange}
-							/>
-						</div>
+            <div>
+              <Label htmlFor="email">Email address</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                {...register('email')}
+                className="mt-2"
+              />
+              {errors.email && (
+                <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+              )}
+            </div>
 
-						<div>
-							<Label htmlFor="email">Email address</Label>
-							<Input
-								id="email"
-								name="email"
-								type="email"
-								required
-								placeholder="Enter your email"
-								className="mt-2"
-								value={form.email}
-								onChange={handleChange}
-							/>
-						</div>
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Create a password"
+                {...register('password')}
+                className="mt-2"
+              />
+              {errors.password && (
+                <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+              )}
+            </div>
+          </div>
 
-						<div>
-							<Label htmlFor="password">Password</Label>
-							<Input
-								id="password"
-								name="password"
-								type="password"
-								required
-								placeholder="Create a password"
-								className="mt-2"
-								value={form.password}
-								onChange={handleChange}
-							/>
-						</div>
-					</div>
+          {registerMutation.error && (
+            <p className="text-red-500 text-sm mt-2">{registerMutation.error.message}</p>
+          )}
 
-					{error && (
-						<p className="text-red-500 text-sm mt-2">{error}</p>
-					)}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={registerMutation.isPending}
+          >
+            {registerMutation.isPending ? 'Creating account...' : 'Create account'}
+          </Button>
 
-					<Button type="submit" className="w-full" disabled={register.isPending}>
-						{register.isPending ? <Loader2 className='animate-spin w-8 h-8' /> : 'Create account'}
-					</Button>
-
-					<div className="text-center">
-						<span className="text-gray-600">Already have an account? </span>
-						<Link href="/login" className="text-blue-600 hover:text-blue-500">
-							Sign in
-						</Link>
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+          <div className="text-center">
+            <span className="text-gray-600">Already have an account? </span>
+            <Link href="/login" className="text-blue-600 hover:text-blue-500">
+              Sign in
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default RegisterForm;

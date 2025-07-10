@@ -1,7 +1,7 @@
 "use client"
 
 
-import { useState} from 'react';
+import { FC, useState} from 'react';
 import { Plus, Search, Filter, MoreVertical, FileText} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import { AppSidebar } from './AppSidebar';
 import Link from 'next/link';
 
-const Dashboard = () => {
+const DashboardWrapper: FC = () => {
   const router = useRouter()
   const { toast } = useToast();
   const [documents, setDocuments] = useState<Document[]>([]);
@@ -195,4 +195,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardWrapper;

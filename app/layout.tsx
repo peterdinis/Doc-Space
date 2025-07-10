@@ -3,6 +3,7 @@ import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const ubuntu = Ubuntu({
 	subsets: ["cyrillic"],
@@ -23,8 +24,13 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${ubuntu.className} antialiased`}>
 				<QueryProvider>
-					{children}
-					<Toaster />
+					<ThemeProvider attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange>
+						{children}
+						<Toaster />
+					</ThemeProvider>
 				</QueryProvider>
 			</body>
 		</html>

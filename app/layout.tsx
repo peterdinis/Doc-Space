@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const ubuntu = Ubuntu({
 	subsets: ["cyrillic"],
@@ -21,7 +22,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${ubuntu.className} antialiased`}>
-				<QueryProvider>{children}</QueryProvider>
+				<QueryProvider>
+					{children}
+					<Toaster />
+				</QueryProvider>
 			</body>
 		</html>
 	);

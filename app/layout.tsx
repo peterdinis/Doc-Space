@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 
 const ubuntu = Ubuntu({
@@ -23,8 +24,15 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${ubuntu.className} antialiased`}>
 				<QueryProvider>
-					{children}
-					<Toaster />
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+					>
+						{children}
+						<Toaster />
+					</ThemeProvider>
 				</QueryProvider>
 			</body>
 		</html>

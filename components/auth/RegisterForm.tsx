@@ -27,6 +27,7 @@ const RegisterForm: FC = () => {
 								type="text"
 								required
 								placeholder="Enter your full name"
+								className="mt-2"
 							/>
 						</div>
 
@@ -38,6 +39,7 @@ const RegisterForm: FC = () => {
 								type="email"
 								required
 								placeholder="Enter your email"
+								className="mt-2"
 							/>
 						</div>
 
@@ -49,6 +51,7 @@ const RegisterForm: FC = () => {
 								type="password"
 								required
 								placeholder="Create a password"
+								className="mt-2"
 							/>
 						</div>
 					</div>

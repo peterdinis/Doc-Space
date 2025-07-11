@@ -52,13 +52,13 @@ const RegisterForm: FC = () => {
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					<div className="space-y-4">
 						<div>
-							<Label htmlFor="name">Full name</Label>
+							<Label htmlFor="name" className="text-gray-800">Full name</Label>
 							<Input
 								id="name"
 								type="text"
 								placeholder="Enter your full name"
 								{...register("name")}
-								className="mt-2"
+								className="mt-2 text-gray-800"
 							/>
 							{errors.name && (
 								<p className="text-sm text-red-500 mt-1">
@@ -68,13 +68,13 @@ const RegisterForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="email">Email address</Label>
+							<Label htmlFor="email" className="text-gray-800">Email address</Label>
 							<Input
 								id="email"
 								type="email"
 								placeholder="Enter your email"
 								{...register("email")}
-								className="mt-2"
+								className="mt-2 text-gray-800"
 							/>
 							{errors.email && (
 								<p className="text-sm text-red-500 mt-1">
@@ -84,13 +84,13 @@ const RegisterForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="password">Password</Label>
+							<Label htmlFor="password" className="text-gray-800">Password</Label>
 							<Input
 								id="password"
 								type="password"
 								placeholder="Create a password"
 								{...register("password")}
-								className="mt-2"
+								className="mt-2 text-gray-800"
 							/>
 							{errors.password && (
 								<p className="text-sm text-red-500 mt-1">

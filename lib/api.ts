@@ -1,5 +1,10 @@
+const BASE_URL =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:3001"
+		: process.env.NEXT_PUBLIC_API_URL || "";
+
 export async function api<T>(url: string, options?: RequestInit): Promise<T> {
-	const res = await fetch(url, {
+	const res = await fetch(`${BASE_URL}${url}`, {
 		...options,
 		headers: {
 			"Content-Type": "application/json",

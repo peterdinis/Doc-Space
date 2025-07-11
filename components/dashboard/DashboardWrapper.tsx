@@ -2,7 +2,7 @@
 
 import { FileText, Filter, MoreVertical, Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton"
 import { type FC, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,42 +19,15 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { useToast } from "@/hooks/shared/useToast";
-import { documentService } from "@/services/documentService";
 import type { Document } from "@/types/document";
-import ThemeDropdown from "../shared/ThemeDropdown";
 import { AppSidebar } from "./AppSidebar";
+import { useMe } from "@/hooks/auth/useAuth";
 
 const DashboardWrapper: FC = () => {
-	const router = useRouter();
-	const { toast } = useToast();
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTerm, setSearchTerm] = useState("");
-
-	const handleCreateDocument = async () => {
-		try {
-			const newDocument = await documentService.createDocument({
-				title: "Untitled Document",
-				content: "",
-			});
-
-			toast({
-				title: "Document created",
-				description: "Your new document has been created successfully.",
-			});
-
-			router.push(`/document/${newDocument.id}`);
-		} catch (error) {
-			console.error("Error creating document:", error);
-			toast({
-				title: "Error creating document",
-				description: "There was a problem creating your document.",
-				variant: "destructive",
-			});
-		}
-	};
-
+	const { data: user} = useMe();
 	const filteredDocuments = documents.filter((doc) =>
 		doc.title.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
@@ -87,7 +60,6 @@ const DashboardWrapper: FC = () => {
 			<div className="min-h-screen w-full flex bg-background">
 				<AppSidebar />
 				<SidebarInset className="flex-1">
-					{/* Header */}
 					<header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center space-x-4">
@@ -97,24 +69,19 @@ const DashboardWrapper: FC = () => {
 										Dashboard
 									</h1>
 									<p className="text-gray-600 dark:text-gray-400">
-										Welcome back, ABCD!
+										Welcome back, {user?.email}
 									</p>
 								</div>
 							</div>
 							<div className="flex items-center justify-between">
 								<div className="flex items-center space-x-3">
 									<Button
-										onClick={handleCreateDocument}
 										className="flex items-center space-x-2"
 									>
 										<Plus className="h-4 w-4" />
-										<span>New Document</span>
+										<Link href="/documents/create">Create document</Link>
 									</Button>
 								</div>
-
-								<span className="ml-3">
-									<ThemeDropdown />
-								</span>
 							</div>
 						</div>
 					</header>
@@ -138,22 +105,16 @@ const DashboardWrapper: FC = () => {
 							</Button>
 						</div>
 
-						{/* Documents Grid */}
 						{isLoading ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 								{[...Array(6)].map((_, i) => (
-									<Card key={i} className="animate-pulse">
-										<CardHeader>
-											<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-											<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-										</CardHeader>
-										<CardContent>
-											<div className="space-y-2">
-												<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
-												<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-											</div>
-										</CardContent>
-									</Card>
+									<div className="flex flex-col space-y-3">
+										<Skeleton className="h-[125px] w-[250px] rounded-xl" />
+										<div className="space-y-2">
+											<Skeleton className="h-4 w-[250px]" />
+											<Skeleton className="h-4 w-[200px]" />
+										</div>
+									</div>
 								))}
 							</div>
 						) : filteredDocuments.length === 0 ? (
@@ -168,7 +129,7 @@ const DashboardWrapper: FC = () => {
 										: "Get started by creating your first document"}
 								</p>
 								{!searchTerm && (
-									<Button onClick={handleCreateDocument}>
+									<Button>
 										<Plus className="h-4 w-4 mr-2" />
 										Create Document
 									</Button>

@@ -5,6 +5,7 @@ import QueryProvider from "@/components/providers/QueryProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/shared/Navigation";
+import { ScrollToTopButton } from "@/components/shared/ScrollToTop";
 
 const ubuntu = Ubuntu({
 	subsets: ["cyrillic"],
@@ -35,6 +36,7 @@ export default function RootLayout({
 							<Navigation />
 							{children}
 							<Toaster />
+							<ScrollToTopButton />
 						</div>
 					</ThemeProvider>
 				</QueryProvider>

@@ -86,10 +86,6 @@ const DashboardWrapper: FC = () => {
 										<Link href="/documents/create">Create document</Link>
 									</Button>
 								</div>
-
-								<span className="ml-3">
-									<ThemeDropdown />
-								</span>
 							</div>
 						</div>
 					</header>

@@ -4,8 +4,10 @@ import type { FC } from "react";
 import { Button } from "@/components/ui/button";
 import ThemeDropdown from "./ThemeDropdown";
 import ProfileDropdown from "../auth/ProfileDropdown";
+import { useMe } from "@/hooks/auth/useAuth";
 
 const Navigation: FC = () => {
+	const { data: user} = useMe();
 	return (
 		<header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 animate-fade-in">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,7 +32,7 @@ const Navigation: FC = () => {
 							<Link href="/register">Get Started</Link>
 						</Button>
 						<ThemeDropdown />
-						<ProfileDropdown />
+						{user && <ProfileDropdown />}
 					</div>
 				</div>
 			</div>

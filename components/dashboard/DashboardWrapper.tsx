@@ -21,12 +21,13 @@ import {
 } from "@/components/ui/sidebar";
 import type { Document } from "@/types/document";
 import { AppSidebar } from "./AppSidebar";
+import { useMe } from "@/hooks/auth/useAuth";
 
 const DashboardWrapper: FC = () => {
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTerm, setSearchTerm] = useState("");
-
+	const { data: user} = useMe();
 	const filteredDocuments = documents.filter((doc) =>
 		doc.title.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
@@ -68,7 +69,7 @@ const DashboardWrapper: FC = () => {
 										Dashboard
 									</h1>
 									<p className="text-gray-600 dark:text-gray-400">
-										Welcome back, ABCD!
+										Welcome back, {user?.email}
 									</p>
 								</div>
 							</div>
@@ -104,7 +105,6 @@ const DashboardWrapper: FC = () => {
 							</Button>
 						</div>
 
-						{/* Documents Grid */}
 						{isLoading ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 								{[...Array(6)].map((_, i) => (

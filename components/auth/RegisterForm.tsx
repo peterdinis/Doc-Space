@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileText } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,7 +11,6 @@ import { useRegister } from "@/hooks/auth/useAuth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useRouter } from "next/navigation";
 
 const registerSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -23,7 +23,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 const RegisterForm: FC = () => {
 	const registerMutation = useRegister();
 
-	const router = useRouter()
+	const router = useRouter();
 
 	const {
 		register,
@@ -35,7 +35,7 @@ const RegisterForm: FC = () => {
 
 	const onSubmit = (data: RegisterFormValues) => {
 		registerMutation.mutate(data);
-		router.push("/login")
+		router.push("/login");
 	};
 
 	return (

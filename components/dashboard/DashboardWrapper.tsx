@@ -2,7 +2,7 @@
 
 import { FileText, Filter, MoreVertical, Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton"
 import { type FC, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,15 +19,10 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { useToast } from "@/hooks/shared/useToast";
-import { documentService } from "@/services/documentService";
 import type { Document } from "@/types/document";
-import ThemeDropdown from "../shared/ThemeDropdown";
 import { AppSidebar } from "./AppSidebar";
 
 const DashboardWrapper: FC = () => {
-	const router = useRouter();
-	const { toast } = useToast();
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTerm, setSearchTerm] = useState("");
@@ -113,18 +108,13 @@ const DashboardWrapper: FC = () => {
 						{isLoading ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 								{[...Array(6)].map((_, i) => (
-									<Card key={i} className="animate-pulse">
-										<CardHeader>
-											<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-											<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-										</CardHeader>
-										<CardContent>
-											<div className="space-y-2">
-												<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
-												<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-											</div>
-										</CardContent>
-									</Card>
+									<div className="flex flex-col space-y-3">
+										<Skeleton className="h-[125px] w-[250px] rounded-xl" />
+										<div className="space-y-2">
+											<Skeleton className="h-4 w-[250px]" />
+											<Skeleton className="h-4 w-[200px]" />
+										</div>
+									</div>
 								))}
 							</div>
 						) : filteredDocuments.length === 0 ? (

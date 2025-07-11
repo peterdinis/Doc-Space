@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { ArrowLeft, Share2} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +10,7 @@ import { AppSidebar } from '../dashboard/AppSidebar';
 import { TiptapEditor } from '../editor/TipTapEditor';
 import { ShareDialog } from './ShareDialog';
 
-const DocumentEditor = () => {
+const DocumentEditor: FC = () => {
   const router = useRouter()
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');

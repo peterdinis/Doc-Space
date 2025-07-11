@@ -27,7 +27,7 @@ export function useLogin() {
 	return useMutation<AuthResponse, Error, LoginDto>({
 		mutationKey: ["login"],
 		mutationFn: (data) =>
-			api<AuthResponse>("/api/auth/login", {
+			api<AuthResponse>("/auth/login", {
 				method: "POST",
 				body: JSON.stringify(data),
 			}),
@@ -38,7 +38,7 @@ export function useRegister() {
 	return useMutation<AuthResponse, Error, RegisterDto>({
 		mutationKey: ["register"],
 		mutationFn: (data) =>
-			api<AuthResponse>("/api/auth/register", {
+			api<AuthResponse>("/auth/register", {
 				method: "POST",
 				body: JSON.stringify(data),
 			}),

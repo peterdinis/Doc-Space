@@ -3,9 +3,9 @@ import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/shared/Navigation";
 import { ScrollToTopButton } from "@/components/shared/ScrollToTop";
+import { Toaster } from "@/components/ui/toaster";
 
 const ubuntu = Ubuntu({
 	subsets: ["cyrillic"],

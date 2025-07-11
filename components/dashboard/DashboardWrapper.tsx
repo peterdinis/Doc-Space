@@ -32,29 +32,6 @@ const DashboardWrapper: FC = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTerm, setSearchTerm] = useState("");
 
-	const handleCreateDocument = async () => {
-		try {
-			const newDocument = await documentService.createDocument({
-				title: "Untitled Document",
-				content: "",
-			});
-
-			toast({
-				title: "Document created",
-				description: "Your new document has been created successfully.",
-			});
-
-			router.push(`/document/${newDocument.id}`);
-		} catch (error) {
-			console.error("Error creating document:", error);
-			toast({
-				title: "Error creating document",
-				description: "There was a problem creating your document.",
-				variant: "destructive",
-			});
-		}
-	};
-
 	const filteredDocuments = documents.filter((doc) =>
 		doc.title.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
@@ -87,7 +64,6 @@ const DashboardWrapper: FC = () => {
 			<div className="min-h-screen w-full flex bg-background">
 				<AppSidebar />
 				<SidebarInset className="flex-1">
-					{/* Header */}
 					<header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center space-x-4">
@@ -104,11 +80,10 @@ const DashboardWrapper: FC = () => {
 							<div className="flex items-center justify-between">
 								<div className="flex items-center space-x-3">
 									<Button
-										onClick={handleCreateDocument}
 										className="flex items-center space-x-2"
 									>
 										<Plus className="h-4 w-4" />
-										<span>New Document</span>
+										<Link href="/documents/create">Create document</Link>
 									</Button>
 								</div>
 
@@ -168,7 +143,7 @@ const DashboardWrapper: FC = () => {
 										: "Get started by creating your first document"}
 								</p>
 								{!searchTerm && (
-									<Button onClick={handleCreateDocument}>
+									<Button>
 										<Plus className="h-4 w-4 mr-2" />
 										Create Document
 									</Button>

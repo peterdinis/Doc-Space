@@ -24,7 +24,9 @@ const Navigation: FC = () => {
 					</div>
 
 					<div className="flex items-center space-x-4 animate-fade-in">
-						<Button variant="outline" asChild className="hover-scale">
+						{!user ? (
+							<>
+							<Button variant="outline" asChild className="hover-scale">
 							<Link href="/login">Sign In</Link>
 						</Button>
 						<Button
@@ -33,8 +35,11 @@ const Navigation: FC = () => {
 						>
 							<Link href="/register">Get Started</Link>
 						</Button>
+							</>
+						): (
+							<ProfileDropdown />
+						)}
 						<ThemeDropdown />
-						{user && <ProfileDropdown />}
 					</div>
 				</div>
 			</div>

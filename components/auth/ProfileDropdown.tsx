@@ -11,14 +11,22 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMe } from "@/hooks/auth/useAuth";
+import Link from "next/link";
+import { useToast } from "@/hooks/shared/useToast";
 
 const ProfileDropdown: FC = () => {
 	const router = useRouter();
 	const { data: user, isLoading} = useMe();
+	const {toast} = useToast()
 
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
 		router.refresh();
+		toast({
+			title: "Logout",
+			duration: 2000,
+			className: "bg-green-800 text-white leading-[125%] text-base font-bold"
+		})
 	};
 
 	return (
@@ -28,7 +36,7 @@ const ProfileDropdown: FC = () => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>
-					{user?.name ?? user?.email ?? "My Account"}
+					<Link href="/dashboard">Dashboard</Link>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={handleLogout}>

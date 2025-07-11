@@ -1,27 +1,8 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-
-interface AuthResponse {
-	access_token: string;
-	user: {
-		id: string;
-		email: string;
-		name?: string;
-		createdAt: string;
-		updatedAt: string;
-	};
-}
-
-interface LoginDto {
-	email: string;
-	password: string;
-}
-
-interface RegisterDto extends LoginDto {
-	name?: string;
-}
+import { AuthResponse, LoginDto, RegisterDto, User } from "@/types/authTypes";
 
 export function useLogin() {
 	return useMutation<AuthResponse, Error, LoginDto>({
@@ -42,5 +23,25 @@ export function useRegister() {
 				method: "POST",
 				body: JSON.stringify(data),
 			}),
+	});
+}
+
+export function useMe() {
+	return useQuery<User>({
+		queryKey: ["me"],
+		queryFn: async () => {
+			const token = localStorage.getItem("access_token");
+
+			if (!token) {
+				throw new Error("No access token found");
+			}
+
+			return api<User>("/user/me", {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+		},
+		enabled: typeof window !== "undefined", 
 	});
 }

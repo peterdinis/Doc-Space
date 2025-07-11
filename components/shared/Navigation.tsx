@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { FC } from "react";
 import { Button } from "@/components/ui/button";
 import ThemeDropdown from "./ThemeDropdown";
+import ProfileDropdown from "../auth/ProfileDropdown";
 
 const Navigation: FC = () => {
 	return (
@@ -29,6 +30,7 @@ const Navigation: FC = () => {
 							<Link href="/register">Get Started</Link>
 						</Button>
 						<ThemeDropdown />
+						<ProfileDropdown />
 					</div>
 				</div>
 			</div>

@@ -2,6 +2,7 @@ import { FileText } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 import { Button } from "@/components/ui/button";
+import ThemeDropdown from "./ThemeDropdown";
 
 const Navigation: FC = () => {
 	return (
@@ -27,6 +28,7 @@ const Navigation: FC = () => {
 						>
 							<Link href="/register">Get Started</Link>
 						</Button>
+						<ThemeDropdown />
 					</div>
 				</div>
 			</div>

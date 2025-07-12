@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Share2 } from "lucide-react";
+import { ArrowLeft, Loader2, Share2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,18 @@ import {
 import { AppSidebar } from "../dashboard/AppSidebar";
 import { TiptapEditor } from "../editor/TipTapEditor";
 import { ShareDialog } from "./ShareDialog";
+import { useCreateDocument, CreateDocumentDto } from "@/hooks/documents/useCreateDocument";
+import { useMe } from "@/hooks/auth/useAuth";
 
 const DocumentEditor: FC = () => {
 	const router = useRouter();
+	const { data: user } = useMe();
+
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+
+	const createDocumentMutation = useCreateDocument();
 
 	const handleBack = () => {
 		router.push("/dashboard");
@@ -32,10 +38,30 @@ const DocumentEditor: FC = () => {
 		setContent(newContent);
 	};
 
-	const handleShareDocument = async (
-		email: string,
-		role: "editor" | "viewer",
-	) => {
+	const handleSave = () => {
+		if (!user?.id) {
+			alert("User not logged in");
+			return;
+		}
+
+		const dto: CreateDocumentDto = {
+			title,
+			content,
+			userId: user.id,
+		};
+
+		createDocumentMutation.mutate(dto, {
+			onSuccess: () => {
+				// napríklad presmerovanie po úspechu
+				router.push("/dashboard");
+			},
+			onError: (error) => {
+				alert(`Error creating document: ${(error as Error).message}`);
+			},
+		});
+	};
+
+	const handleShareDocument = async (email: string, role: "editor" | "viewer") => {
 		// TODO
 	};
 
@@ -44,36 +70,37 @@ const DocumentEditor: FC = () => {
 			<div className="min-h-screen w-full flex bg-background">
 				<AppSidebar />
 				<SidebarInset className="flex-1">
-					<header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-						<div className="flex items-center justify-between">
-							<div className="flex items-center space-x-4">
-								<SidebarTrigger />
-								<Button
-									variant="ghost"
-									size="sm"
-									onClick={handleBack}
-									className="flex items-center space-x-2"
-								>
-									<ArrowLeft className="h-4 w-4" />
-									<span>Back</span>
-								</Button>
-								<Input
-									value={title}
-									onChange={(e) => setTitle(e.target.value)}
-									className="text-lg font-semibold border-none shadow-none focus-visible:ring-0 max-w-md bg-transparent"
-									placeholder="Untitled document"
-								/>
-							</div>
-							<div className="flex items-center space-x-3">
-								<Button
-									onClick={handleShare}
-									size="sm"
-									className="flex items-center space-x-2"
-								>
-									<Share2 className="h-4 w-4" />
-									<span>Share</span>
-								</Button>
-							</div>
+					<header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+						<div className="flex items-center space-x-4">
+							<SidebarTrigger />
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={handleBack}
+								className="flex items-center space-x-2"
+							>
+								<ArrowLeft className="h-4 w-4" />
+								<span>Back</span>
+							</Button>
+							<Input
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+								className="text-lg font-semibold border-none shadow-none focus-visible:ring-0 max-w-md bg-transparent"
+								placeholder="Untitled document"
+							/>
+						</div>
+						<div className="flex items-center space-x-3">
+							<Button onClick={handleSave} size="sm" disabled={createDocumentMutation.isPending}>
+								{createDocumentMutation.isPending ? <Loader2 className="animate-spin w-8 h-8" /> : "Save"}
+							</Button>
+							<Button
+								onClick={handleShare}
+								size="sm"
+								className="flex items-center space-x-2"
+							>
+								<Share2 className="h-4 w-4" />
+								<span>Share</span>
+							</Button>
 						</div>
 					</header>
 
@@ -86,7 +113,7 @@ const DocumentEditor: FC = () => {
 						isOpen={isShareDialogOpen}
 						onClose={() => setIsShareDialogOpen(false)}
 						onShare={handleShareDocument}
-						documentTitle={"ABCD"}
+						documentTitle={title || "Untitled document"}
 					/>
 				</SidebarInset>
 			</div>

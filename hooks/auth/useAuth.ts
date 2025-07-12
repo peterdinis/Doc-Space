@@ -41,12 +41,18 @@ export function useMe() {
 				throw new Error("No access token found");
 			}
 
-			return api<User>("/user/me", {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			try {
+				return await api<User>("/user/me", {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+			} catch (error: any) {
+				localStorage.removeItem("access_token");
+				throw new Error("Invalid or expired token");
+			}
 		},
 		enabled: typeof window !== "undefined",
+		retry: false,
 	});
 }

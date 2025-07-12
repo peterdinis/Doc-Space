@@ -48,10 +48,8 @@ export const ShareDialog = ({
 			setRole("editor");
 			onClose();
 		} catch (error) {
-			// Error is handled in parent component
-		} finally {
 			setIsSharing(false);
-		}
+		} 
 	};
 
 	return (

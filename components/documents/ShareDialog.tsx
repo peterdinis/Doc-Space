@@ -80,7 +80,7 @@ export const ShareDialog = ({
 						/>
 					</div>
 
-					<div className="grid gap-2">
+					<div className="grid w-full gap-2">
 						<Label htmlFor="role">Role</Label>
 						<Select
 							value={role}

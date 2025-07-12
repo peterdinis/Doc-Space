@@ -21,7 +21,7 @@ const ProfileDropdown: FC = () => {
 
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
-		router.refresh();
+		router.push("/login")
 		toast({
 			title: "Logout",
 			duration: 2000,

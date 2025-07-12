@@ -8,7 +8,7 @@ export interface AuthResponse {
 		updatedAt: string;
 	};
 }
-
+ 
 export interface LoginDto {
 	email: string;
 	password: string;

@@ -13,9 +13,17 @@ import {
 import { AppSidebar } from "./AppSidebar";
 import { useMe } from "@/hooks/auth/useAuth";
 import DocumentList from "../documents/DocumentList";
+import {
+	Pagination,
+	PaginationContent,
+	PaginationItem,
+	PaginationLink,
+} from "@/components/ui/pagination";
 
 const DashboardWrapper: FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");
+	const [page, setPage] = useState(1);
+	const pageCount = 10;
 	const { data: user } = useMe();
 
 	return (
@@ -38,9 +46,7 @@ const DashboardWrapper: FC = () => {
 							</div>
 							<div className="flex items-center justify-between">
 								<div className="flex items-center space-x-3">
-									<Button
-										className="flex items-center space-x-2"
-									>
+									<Button className="flex items-center space-x-2">
 										<Plus className="h-4 w-4" />
 										<Link href="/documents/create">Create document</Link>
 									</Button>
@@ -65,8 +71,31 @@ const DashboardWrapper: FC = () => {
 								Filter
 							</Button>
 						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
 							<DocumentList />
+						</div>
+
+						{/* Pagination */}
+						<div className="flex justify-center">
+							<Pagination>
+								<PaginationContent>
+									{Array.from({ length: pageCount }, (_, index) => {
+										const pageNum = index + 1;
+										return (
+											<PaginationItem key={pageNum}>
+												<PaginationLink
+													isActive={page === pageNum}
+													onClick={() => setPage(pageNum)}
+													href="#"
+												>
+													{pageNum}
+												</PaginationLink>
+											</PaginationItem>
+										);
+									})}
+								</PaginationContent>
+							</Pagination>
 						</div>
 					</main>
 				</SidebarInset>

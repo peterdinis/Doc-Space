@@ -54,7 +54,9 @@ const LoginForm: FC = () => {
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					<div className="space-y-4">
 						<div>
-							<Label htmlFor="email" className="text-gray-800">Email address</Label>
+							<Label htmlFor="email" className="text-gray-800">
+								Email address
+							</Label>
 							<Input
 								id="email"
 								type="email"
@@ -70,7 +72,9 @@ const LoginForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="password" className="text-gray-800">Password</Label>
+							<Label htmlFor="password" className="text-gray-800">
+								Password
+							</Label>
 							<Input
 								id="password"
 								type="password"

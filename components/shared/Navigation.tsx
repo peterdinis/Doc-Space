@@ -11,7 +11,7 @@ import { useMe } from "@/hooks/auth/useAuth";
 const Navigation: FC = () => {
 	const { data: user} = useMe();
 	return (
-		<header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 animate-fade-in">
+		<header className="bg-white/80 dark:bg-background backdrop-blur-md shadow-sm sticky top-0 z-50 animate-fade-in">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex justify-between items-center h-16">
 					<div className="flex items-center animate-scale-in">
@@ -24,7 +24,9 @@ const Navigation: FC = () => {
 					</div>
 
 					<div className="flex items-center space-x-4 animate-fade-in">
-						<Button variant="outline" asChild className="hover-scale">
+						{!user ? (
+							<>
+							<Button variant="outline" asChild className="hover-scale">
 							<Link href="/login">Sign In</Link>
 						</Button>
 						<Button
@@ -33,8 +35,11 @@ const Navigation: FC = () => {
 						>
 							<Link href="/register">Get Started</Link>
 						</Button>
+							</>
+						): (
+							<ProfileDropdown />
+						)}
 						<ThemeDropdown />
-						{user && <ProfileDropdown />}
 					</div>
 				</div>
 			</div>

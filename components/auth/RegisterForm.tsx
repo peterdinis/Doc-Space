@@ -11,6 +11,7 @@ import { useRegister } from "@/hooks/auth/useAuth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useToast } from "@/hooks/shared/useToast";
 
 const registerSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -24,7 +25,7 @@ const RegisterForm: FC = () => {
 	const registerMutation = useRegister();
 
 	const router = useRouter();
-
+	const {toast} = useToast()
 	const {
 		register,
 		handleSubmit,
@@ -35,6 +36,11 @@ const RegisterForm: FC = () => {
 
 	const onSubmit = (data: RegisterFormValues) => {
 		registerMutation.mutate(data);
+		toast({
+			title: "Register DONE",
+			duration: 2000,
+			className: "bg-green-800 text-white font-bold text-base leading-[125%]"
+		})
 		router.push("/login");
 	};
 

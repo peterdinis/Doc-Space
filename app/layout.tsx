@@ -32,7 +32,7 @@ export default function RootLayout({
 						enableSystem
 						disableTransitionOnChange
 					>
-						<div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+						<div className="min-h-screen bg-gradient-to-br from-blue-50 dark:from-foreground via-indigo-50 dark:via-card to-purple-50 dark:to-background">
 							<Navigation />
 							{children}
 							<Toaster />

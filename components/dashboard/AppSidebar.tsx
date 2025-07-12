@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,7 +29,6 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/shared/useToast";
-import { documentService } from "@/services/documentService";
 import type { Document } from "@/types/document";
 
 interface Folder {
@@ -207,7 +206,7 @@ export const AppSidebar = () => {
 								<SidebarMenuButton asChild>
 									<Link
 										href="/dashboard"
-										className={`${location.pathname === "/dashboard" ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400" : "hover:bg-gray-100 dark:hover:bg-gray-700"} transition-colors duration-200`}
+										className={`bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 transition-colors duration-200`}
 									>
 										<FileText className="h-4 w-4" />
 										{!isCollapsed && <span>All Documents</span>}

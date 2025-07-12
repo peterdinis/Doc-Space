@@ -15,11 +15,12 @@ import { TiptapEditor } from "../editor/TipTapEditor";
 import { ShareDialog } from "./ShareDialog";
 import { useCreateDocument, CreateDocumentDto } from "@/hooks/documents/useCreateDocument";
 import { useMe } from "@/hooks/auth/useAuth";
+import { useToast } from "@/hooks/shared/useToast";
 
 const DocumentEditor: FC = () => {
 	const router = useRouter();
 	const { data: user } = useMe();
-
+	const { toast } = useToast()
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
@@ -40,7 +41,11 @@ const DocumentEditor: FC = () => {
 
 	const handleSave = () => {
 		if (!user?.id) {
-			alert("User not logged in");
+			toast({
+				title: "User is not logged in",
+				className: "bg-orange-800 text-white font-bold text-xl leading-[125%]",
+				duration: 2000
+			})
 			return;
 		}
 
@@ -52,11 +57,19 @@ const DocumentEditor: FC = () => {
 
 		createDocumentMutation.mutate(dto, {
 			onSuccess: () => {
-				// napríklad presmerovanie po úspechu
+				toast({
+					title: "New document was created",
+					className: "bg-green-800 text-white font-bold text-xl leading-[125%]",
+					duration: 2000
+				})
 				router.push("/dashboard");
 			},
 			onError: (error) => {
-				alert(`Error creating document: ${(error as Error).message}`);
+				toast({
+					title: "Failed to create document",
+					className: "bg-red-800 text-white font-bold text-xl leading-[125%]",
+					duration: 2000
+				})
 			},
 		});
 	};

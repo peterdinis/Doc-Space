@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import {
 	DropdownMenu,
@@ -15,13 +14,12 @@ import { useMe } from "@/hooks/auth/useAuth";
 import { useToast } from "@/hooks/shared/useToast";
 
 const ProfileDropdown: FC = () => {
-	const router = useRouter();
 	const { data: user, isLoading } = useMe();
 	const { toast } = useToast();
 
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
-		router.push("/login")
+		window.location.replace("/login")
 		toast({
 			title: "Logout",
 			duration: 2000,

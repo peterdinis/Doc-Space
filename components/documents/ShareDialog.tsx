@@ -1,6 +1,6 @@
 "use client";
 
-import { Share2 } from "lucide-react";
+import { Loader2, Share2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,7 +56,7 @@ export const ShareDialog = ({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent>
 				<DialogHeader>
 					<DialogTitle className="flex items-center">
 						<Share2 className="h-5 w-5 mr-2" />
@@ -106,7 +106,7 @@ export const ShareDialog = ({
 						Cancel
 					</Button>
 					<Button onClick={handleShare} disabled={!email.trim() || isSharing}>
-						{isSharing ? "Sharing..." : "Share"}
+						{isSharing ? <Loader2 className="animate-spin w-8 h-8" /> : "Share"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

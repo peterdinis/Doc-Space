@@ -1,8 +1,8 @@
+import type { NextPage } from "next";
 import DocumentEditor from "@/components/documents/DocumentEditor";
-import { NextPage } from "next";
 
 const CreateNewDocumentPage: NextPage = () => {
-    return <DocumentEditor />
-}
+	return <DocumentEditor />;
+};
 
-export default CreateNewDocumentPage
+export default CreateNewDocumentPage;

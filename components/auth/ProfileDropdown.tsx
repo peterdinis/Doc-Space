@@ -1,7 +1,8 @@
 "use client";
 
-import { FC } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import type { FC } from "react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,13 +12,12 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMe } from "@/hooks/auth/useAuth";
-import Link from "next/link";
 import { useToast } from "@/hooks/shared/useToast";
 
 const ProfileDropdown: FC = () => {
 	const router = useRouter();
-	const { data: user, isLoading} = useMe();
-	const {toast} = useToast()
+	const { data: user, isLoading } = useMe();
+	const { toast } = useToast();
 
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
@@ -25,23 +25,21 @@ const ProfileDropdown: FC = () => {
 		toast({
 			title: "Logout",
 			duration: 2000,
-			className: "bg-green-800 text-white leading-[125%] text-base font-bold"
-		})
+			className: "bg-green-800 text-white leading-[125%] text-base font-bold",
+		});
 	};
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				{isLoading ? "..." : user?.name ?? user?.email ?? "Open"}
+				{isLoading ? "..." : (user?.name ?? user?.email ?? "Open")}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>
 					<Link href="/dashboard">Dashboard</Link>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={handleLogout}>
-					Log out
-				</DropdownMenuItem>
+				<DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

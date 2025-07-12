@@ -1,9 +1,7 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 const DocumentList: FC = () => {
-    return (
-        <>DOCUMENT LIST</>
-    )
-}
+	return <>DOCUMENT LIST</>;
+};
 
-export default DocumentList
+export default DocumentList;

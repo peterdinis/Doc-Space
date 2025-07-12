@@ -163,7 +163,9 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 									editor.isActive({ textAlign: "left" }) ? "default" : "ghost"
 								}
 								size="sm"
-								onClick={() => editor.chain().focus().setTextAlign("left").run()}
+								onClick={() =>
+									editor.chain().focus().setTextAlign("left").run()
+								}
 								className="h-8 w-8 p-0"
 							>
 								<AlignLeft className="h-4 w-4" />
@@ -185,14 +187,18 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 									editor.isActive({ textAlign: "right" }) ? "default" : "ghost"
 								}
 								size="sm"
-								onClick={() => editor.chain().focus().setTextAlign("right").run()}
+								onClick={() =>
+									editor.chain().focus().setTextAlign("right").run()
+								}
 								className="h-8 w-8 p-0"
 							>
 								<AlignRight className="h-4 w-4" />
 							</Button>
 							<Button
 								variant={
-									editor.isActive({ textAlign: "justify" }) ? "default" : "ghost"
+									editor.isActive({ textAlign: "justify" })
+										? "default"
+										: "ghost"
 								}
 								size="sm"
 								onClick={() =>

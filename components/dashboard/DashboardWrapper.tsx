@@ -6,19 +6,19 @@ import { type FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-	SidebarInset,
-	SidebarProvider,
-	SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { AppSidebar } from "./AppSidebar";
-import { useMe } from "@/hooks/auth/useAuth";
-import DocumentList from "../documents/DocumentList";
-import {
 	Pagination,
 	PaginationContent,
 	PaginationItem,
 	PaginationLink,
 } from "@/components/ui/pagination";
+import {
+	SidebarInset,
+	SidebarProvider,
+	SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { useMe } from "@/hooks/auth/useAuth";
+import DocumentList from "../documents/DocumentList";
+import { AppSidebar } from "./AppSidebar";
 
 const DashboardWrapper: FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");

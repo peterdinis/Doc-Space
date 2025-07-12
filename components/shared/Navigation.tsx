@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
 import { FileText } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 import { Button } from "@/components/ui/button";
-import ThemeDropdown from "./ThemeDropdown";
-import ProfileDropdown from "../auth/ProfileDropdown";
 import { useMe } from "@/hooks/auth/useAuth";
+import ProfileDropdown from "../auth/ProfileDropdown";
+import ThemeDropdown from "./ThemeDropdown";
 
 const Navigation: FC = () => {
-	const { data: user} = useMe();
+	const { data: user } = useMe();
 	return (
 		<header className="bg-white/80 dark:bg-background backdrop-blur-md shadow-sm sticky top-0 z-50 animate-fade-in">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,17 +26,17 @@ const Navigation: FC = () => {
 					<div className="flex items-center space-x-4 animate-fade-in">
 						{!user ? (
 							<>
-							<Button variant="outline" asChild className="hover-scale">
-							<Link href="/login">Sign In</Link>
-						</Button>
-						<Button
-							asChild
-							className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover-scale"
-						>
-							<Link href="/register">Get Started</Link>
-						</Button>
+								<Button variant="outline" asChild className="hover-scale">
+									<Link href="/login">Sign In</Link>
+								</Button>
+								<Button
+									asChild
+									className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover-scale"
+								>
+									<Link href="/register">Get Started</Link>
+								</Button>
 							</>
-						): (
+						) : (
 							<ProfileDropdown />
 						)}
 						<ThemeDropdown />

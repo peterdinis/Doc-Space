@@ -8,10 +8,10 @@ import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRegister } from "@/hooks/auth/useAuth";
+import { useToast } from "@/hooks/shared/useToast";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useToast } from "@/hooks/shared/useToast";
 
 const registerSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -25,7 +25,7 @@ const RegisterForm: FC = () => {
 	const registerMutation = useRegister();
 
 	const router = useRouter();
-	const {toast} = useToast()
+	const { toast } = useToast();
 	const {
 		register,
 		handleSubmit,
@@ -39,8 +39,8 @@ const RegisterForm: FC = () => {
 		toast({
 			title: "Register DONE",
 			duration: 2000,
-			className: "bg-green-800 text-white font-bold text-base leading-[125%]"
-		})
+			className: "bg-green-800 text-white font-bold text-base leading-[125%]",
+		});
 		router.push("/login");
 	};
 
@@ -58,7 +58,9 @@ const RegisterForm: FC = () => {
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					<div className="space-y-4">
 						<div>
-							<Label htmlFor="name" className="text-gray-800">Full name</Label>
+							<Label htmlFor="name" className="text-gray-800">
+								Full name
+							</Label>
 							<Input
 								id="name"
 								type="text"
@@ -74,7 +76,9 @@ const RegisterForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="email" className="text-gray-800">Email address</Label>
+							<Label htmlFor="email" className="text-gray-800">
+								Email address
+							</Label>
 							<Input
 								id="email"
 								type="email"
@@ -90,7 +94,9 @@ const RegisterForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="password" className="text-gray-800">Password</Label>
+							<Label htmlFor="password" className="text-gray-800">
+								Password
+							</Label>
 							<Input
 								id="password"
 								type="password"

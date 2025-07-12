@@ -2,7 +2,12 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { AuthResponse, LoginDto, RegisterDto, User } from "@/types/authTypes";
+import type {
+	AuthResponse,
+	LoginDto,
+	RegisterDto,
+	User,
+} from "@/types/authTypes";
 
 export function useLogin() {
 	return useMutation<AuthResponse, Error, LoginDto>({
@@ -42,6 +47,6 @@ export function useMe() {
 				},
 			});
 		},
-		enabled: typeof window !== "undefined", 
+		enabled: typeof window !== "undefined",
 	});
 }

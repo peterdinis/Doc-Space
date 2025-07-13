@@ -1,29 +1,35 @@
-export interface Document {
-	id: string;
-	title: string;
-	content: string;
-	createdAt: Date;
-	updatedAt: Date;
-	ownerId: string;
-	ownerName: string;
-	collaborators: Collaborator[];
-	isShared: boolean;
-	status: "draft" | "published" | "archived";
-}
+import { z } from "zod";
 
-export interface Collaborator {
-	id: string;
-	name: string;
-	email: string;
-	role: "owner" | "editor" | "viewer";
-	avatar?: string;
-	isOnline?: boolean;
-}
+export const collaboratorSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	email: z.string().email(),
+	role: z.enum(["owner", "editor", "viewer"]),
+	avatar: z.string().url().optional(),
+	isOnline: z.boolean().optional(),
+});
 
-export interface DocumentShare {
-	documentId: string;
-	userId: string;
-	role: "editor" | "viewer";
-	invitedBy: string;
-	invitedAt: Date;
-}
+export const documentSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+	content: z.string(),
+	createdAt: z.coerce.date(),
+	updatedAt: z.coerce.date(),
+	ownerId: z.string(),
+	ownerName: z.string(),
+	collaborators: z.array(collaboratorSchema),
+	isShared: z.boolean(),
+	status: z.enum(["draft", "published", "archived"]),
+});
+
+export const documentShareSchema = z.object({
+	documentId: z.string(),
+	userId: z.string(),
+	role: z.enum(["editor", "viewer"]),
+	invitedBy: z.string(),
+	invitedAt: z.coerce.date(),
+});
+
+export type Collaborator = z.infer<typeof collaboratorSchema>;
+export type Document = z.infer<typeof documentSchema>;
+export type DocumentShare = z.infer<typeof documentShareSchema>;

@@ -1,6 +1,6 @@
-import Footer from "@/components/shared/Footer";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+import Footer from "@/components/shared/Footer";
 import "@testing-library/jest-dom";
 
 describe("Footer", () => {
@@ -12,7 +12,9 @@ describe("Footer", () => {
 	it("renders the description text", () => {
 		render(<Footer />);
 		expect(
-			screen.getByText("Create, collaborate, and share documents like never before.")
+			screen.getByText(
+				"Create, collaborate, and share documents like never before.",
+			),
 		).toBeInTheDocument();
 	});
 

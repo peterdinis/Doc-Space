@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react-hooks";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useIsMobile } from "@/hooks/shared/useMobile";
 
 const MOBILE_BREAKPOINT = 768;
@@ -23,7 +23,11 @@ describe("useIsMobile", () => {
 	});
 
 	it("should return true if screen width is less than 768px", () => {
-		Object.defineProperty(window, "innerWidth", { writable: true, configurable: true, value: 500 });
+		Object.defineProperty(window, "innerWidth", {
+			writable: true,
+			configurable: true,
+			value: 500,
+		});
 		window.matchMedia = createMatchMedia(window.innerWidth);
 
 		const { result } = renderHook(() => useIsMobile());
@@ -32,7 +36,11 @@ describe("useIsMobile", () => {
 	});
 
 	it("should return false if screen width is 768px or more", () => {
-		Object.defineProperty(window, "innerWidth", { writable: true, configurable: true, value: 1024 });
+		Object.defineProperty(window, "innerWidth", {
+			writable: true,
+			configurable: true,
+			value: 1024,
+		});
 		window.matchMedia = createMatchMedia(window.innerWidth);
 
 		const { result } = renderHook(() => useIsMobile());

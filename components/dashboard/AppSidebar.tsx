@@ -141,9 +141,9 @@ export const AppSidebar = () => {
 						documentsCount: Math.max(
 							0,
 							folder.documentsCount -
-							(folder.documents.some((doc) => doc.id === draggedDocument.id)
-								? 1
-								: 0),
+								(folder.documents.some((doc) => doc.id === draggedDocument.id)
+									? 1
+									: 0),
 						),
 					};
 				}
@@ -267,10 +267,11 @@ export const AppSidebar = () => {
 
 				<SidebarGroup>
 					<Dialog open={open} onOpenChange={setOpen}>
-						<SidebarGroupLabel
-							className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
-						>
-							<div className="flex items-center" onClick={() => toggleSection("folders")}>
+						<SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors">
+							<div
+								className="flex items-center"
+								onClick={() => toggleSection("folders")}
+							>
 								{expandedSections.folders ? (
 									<ChevronDown className="h-4 w-4 mr-1" />
 								) : (
@@ -303,7 +304,8 @@ export const AppSidebar = () => {
 									e.preventDefault();
 									const form = e.target as HTMLFormElement;
 									const formData = new FormData(form);
-									const folderName = formData.get("folderName")?.toString() || "";
+									const folderName =
+										formData.get("folderName")?.toString() || "";
 
 									console.log("Pridaný folder:", folderName);
 
@@ -317,7 +319,9 @@ export const AppSidebar = () => {
 									className="w-full border rounded-md p-2 mb-4"
 									required
 								/>
-								<Button type="submit">Add new folder <Folder /></Button>
+								<Button type="submit">
+									Add new folder <Folder />
+								</Button>
 							</form>
 						</DialogContent>
 					</Dialog>

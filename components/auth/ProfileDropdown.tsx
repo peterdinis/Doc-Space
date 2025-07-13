@@ -19,7 +19,7 @@ const ProfileDropdown: FC = () => {
 
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
-		window.location.replace("/login")
+		window.location.replace("/login");
 		toast({
 			title: "Logout",
 			duration: 2000,

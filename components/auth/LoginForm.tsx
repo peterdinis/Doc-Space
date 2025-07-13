@@ -11,6 +11,7 @@ import { useLogin } from "@/hooks/auth/useAuth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { saveAccessToken } from "@/lib/tokenStorage";
 
 const loginSchema = z.object({
 	email: z.string().email("Invalid email"),
@@ -34,7 +35,7 @@ const LoginForm: FC = () => {
 	const onSubmit = async (data: LoginFormValues) => {
 		loginMutation.mutate(data, {
 			onSuccess: (res: { access_token: string }) => {
-				localStorage.setItem("access_token", res.access_token);
+				saveAccessToken(res.access_token);
 				router.push("/dashboard");
 			},
 		});

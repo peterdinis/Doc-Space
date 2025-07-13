@@ -8,6 +8,7 @@ import type {
 	RegisterDto,
 	User,
 } from "@/types/authTypes";
+import { getAccessToken, removeAccessToken } from "@/lib/tokenStorage";
 
 export function useLogin() {
 	return useMutation<AuthResponse, Error, LoginDto>({
@@ -35,8 +36,7 @@ export function useMe() {
 	return useQuery<User>({
 		queryKey: ["me"],
 		queryFn: async () => {
-			const token = localStorage.getItem("access_token");
-
+			const token = getAccessToken()
 			if (!token) {
 				throw new Error("No access token found");
 			}
@@ -48,7 +48,7 @@ export function useMe() {
 					},
 				});
 			} catch (error: any) {
-				localStorage.removeItem("access_token");
+				removeAccessToken()
 				throw new Error("Invalid or expired token");
 			}
 		},

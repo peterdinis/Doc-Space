@@ -3,7 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMe } from "@/hooks/auth/useAuth";
 import { api } from "@/lib/api";
-import type { Document } from "@/types/document";
+import { Document } from "@/types/documentTypes";
+import { getAccessToken } from "@/lib/tokenStorage";
 
 export function useAllUserDocuments() {
 	const { data: user } = useMe();
@@ -13,7 +14,7 @@ export function useAllUserDocuments() {
 		queryFn: async () => {
 			if (!user?.id) throw new Error("User ID is missing");
 
-			const token = localStorage.getItem("access_token");
+			const token = getAccessToken()
 			if (!token) throw new Error("No access token found");
 
 			return api<Document[]>(`/documents/me/${user.id}`, {

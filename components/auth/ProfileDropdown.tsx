@@ -12,14 +12,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMe } from "@/hooks/auth/useAuth";
 import { useToast } from "@/hooks/shared/useToast";
+import { removeAccessToken } from "@/lib/tokenStorage";
+import { useRouter } from "next/navigation";
 
 const ProfileDropdown: FC = () => {
 	const { data: user, isLoading } = useMe();
 	const { toast } = useToast();
+	const router = useRouter()
 
 	const handleLogout = () => {
-		localStorage.removeItem("access_token");
-		window.location.replace("/login");
+		removeAccessToken()
+		router.push("/login")
 		toast({
 			title: "Logout",
 			duration: 2000,

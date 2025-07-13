@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMe } from "@/hooks/auth/useAuth";
 import { api } from "@/lib/api";
-import { Document } from "@/types/documentTypes";
+import type { Document } from "@/types/documentTypes";
 
 export function useAllUserDocuments() {
 	const { data: user } = useMe();

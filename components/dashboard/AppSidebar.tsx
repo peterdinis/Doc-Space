@@ -269,9 +269,8 @@ export const AppSidebar = () => {
 				<SidebarGroup>
 					<SidebarGroupLabel
 						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
-						onClick={() => toggleSection("folders")}
 					>
-						<div className="flex items-center">
+						<div className="flex items-center" onClick={() => toggleSection("folders")}>
 							{expandedSections.folders ? (
 								<ChevronDown className="h-4 w-4 mr-1" />
 							) : (
@@ -280,7 +279,6 @@ export const AppSidebar = () => {
 							<Folder className="h-4 w-4 mr-2" />
 							{!isCollapsed && <span>Folders</span>}
 						</div>
-						{!isCollapsed && (
 							<Button
 								variant="ghost"
 								size="sm"
@@ -288,7 +286,6 @@ export const AppSidebar = () => {
 							>
 								<Plus className="h-3 w-3" />
 							</Button>
-						)}
 					</SidebarGroupLabel>
 
 					{expandedSections.folders && (

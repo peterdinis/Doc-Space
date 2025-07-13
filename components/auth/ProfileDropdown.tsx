@@ -17,6 +17,8 @@ const ProfileDropdown: FC = () => {
 	const { data: user, isLoading } = useMe();
 	const { toast } = useToast();
 
+
+	console.log("U", user)
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
 		window.location.replace("/login");

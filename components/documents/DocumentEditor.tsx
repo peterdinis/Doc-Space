@@ -23,6 +23,8 @@ import { ShareDialog } from "./ShareDialog";
 const DocumentEditor: FC = () => {
 	const router = useRouter();
 	const { data: user } = useMe();
+
+	console.log("U", user)
 	const { toast } = useToast();
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
@@ -43,7 +45,7 @@ const DocumentEditor: FC = () => {
 	};
 
 	const handleSave = () => {
-		if (!user?.id) {
+		if (!user) {
 			toast({
 				title: "User is not logged in",
 				className: "bg-orange-800 text-white font-bold text-xl leading-[125%]",

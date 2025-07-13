@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/shared/useToast";
 import type { Document } from "@/types/document";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 interface Folder {
 	id: string;
@@ -80,7 +81,7 @@ const mockConnections: Connection[] = [
 
 export const AppSidebar = () => {
 	const { state } = useSidebar();
-	const router = useRouter();
+	const [open, setOpen] = useState(false);
 	const { toast } = useToast();
 	const [searchTerm, setSearchTerm] = useState("");
 	const [documents, setDocuments] = useState<Document[]>([]);
@@ -140,9 +141,9 @@ export const AppSidebar = () => {
 						documentsCount: Math.max(
 							0,
 							folder.documentsCount -
-								(folder.documents.some((doc) => doc.id === draggedDocument.id)
-									? 1
-									: 0),
+							(folder.documents.some((doc) => doc.id === draggedDocument.id)
+								? 1
+								: 0),
 						),
 					};
 				}
@@ -198,7 +199,6 @@ export const AppSidebar = () => {
 					</div>
 				)}
 
-				{/* Quick Actions */}
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>
@@ -265,28 +265,62 @@ export const AppSidebar = () => {
 					)}
 				</SidebarGroup>
 
-				{/* Folders */}
 				<SidebarGroup>
-					<SidebarGroupLabel
-						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
-					>
-						<div className="flex items-center" onClick={() => toggleSection("folders")}>
-							{expandedSections.folders ? (
-								<ChevronDown className="h-4 w-4 mr-1" />
-							) : (
-								<ChevronRight className="h-4 w-4 mr-1" />
-							)}
-							<Folder className="h-4 w-4 mr-2" />
-							{!isCollapsed && <span>Folders</span>}
-						</div>
+					<Dialog open={open} onOpenChange={setOpen}>
+						<SidebarGroupLabel
+							className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
+						>
+							<div className="flex items-center" onClick={() => toggleSection("folders")}>
+								{expandedSections.folders ? (
+									<ChevronDown className="h-4 w-4 mr-1" />
+								) : (
+									<ChevronRight className="h-4 w-4 mr-1" />
+								)}
+								<Folder className="h-4 w-4 mr-2" />
+								{!isCollapsed && <span>Folders</span>}
+							</div>
+
 							<Button
 								variant="ghost"
 								size="sm"
 								className="h-6 w-6 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
+								onClick={(e) => {
+									e.stopPropagation();
+									setOpen(true);
+								}}
 							>
 								<Plus className="h-3 w-3" />
 							</Button>
-					</SidebarGroupLabel>
+						</SidebarGroupLabel>
+
+						<DialogContent>
+							<DialogHeader>
+								<DialogTitle>Add New Folder</DialogTitle>
+							</DialogHeader>
+
+							<form
+								onSubmit={(e) => {
+									e.preventDefault();
+									const form = e.target as HTMLFormElement;
+									const formData = new FormData(form);
+									const folderName = formData.get("folderName")?.toString() || "";
+
+									console.log("Pridaný folder:", folderName);
+
+									setOpen(false);
+								}}
+							>
+								<Input
+									name="folderName"
+									type="text"
+									placeholder="Folder Name"
+									className="w-full border rounded-md p-2 mb-4"
+									required
+								/>
+								<Button type="submit">Add new folder <Folder /></Button>
+							</form>
+						</DialogContent>
+					</Dialog>
 
 					{expandedSections.folders && (
 						<SidebarGroupContent className="animate-accordion-down">

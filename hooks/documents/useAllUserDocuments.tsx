@@ -1,12 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/api";
 import { useMe } from "@/hooks/auth/useAuth";
-import { Document } from "@/types/document";
+import { api } from "@/lib/api";
+import type { Document } from "@/types/document";
 
 export function useAllUserDocuments() {
-	const { data: user} = useMe();
+	const { data: user } = useMe();
 
 	return useQuery<Document[]>({
 		queryKey: ["my-documents", user?.id],

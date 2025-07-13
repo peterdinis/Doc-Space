@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { api } from "@/lib/api";
 import { z } from "zod";
+import { api } from "@/lib/api";
 
 export const createDocumentSchema = z.object({
 	title: z.string().min(1, "Title is required"),

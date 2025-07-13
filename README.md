@@ -19,7 +19,6 @@ Built with:
 - 🔍 Full-text search for documents
 - ⚡ Fast and responsive UI
 - 💾 Auto-saving and versioning (WIP)
-- 🔐 Auth with Kinde (or your chosen provider)
 
 ---
 

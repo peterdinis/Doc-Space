@@ -2,7 +2,16 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { FolderListResponse, folderListResponseSchema, Folder, folderSchema, CreateFolderDto, createFolderSchema, UpdateFolderDto, updateFolderSchema } from "@/types/folderTypes";
+import {
+	type CreateFolderDto,
+	createFolderSchema,
+	type Folder,
+	type FolderListResponse,
+	folderListResponseSchema,
+	folderSchema,
+	type UpdateFolderDto,
+	updateFolderSchema,
+} from "@/types/folderTypes";
 
 export function useFolders(ownerId: string, search = "", page = 1, limit = 10) {
 	return useQuery<FolderListResponse>({

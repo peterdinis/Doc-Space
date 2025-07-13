@@ -10,17 +10,20 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { useMe } from "@/hooks/auth/useAuth";
+import {
+	type CreateDocumentDto,
+	useCreateDocument,
+} from "@/hooks/documents/useCreateDocument";
+import { useToast } from "@/hooks/shared/useToast";
 import { AppSidebar } from "../dashboard/AppSidebar";
 import { TiptapEditor } from "../editor/TipTapEditor";
 import { ShareDialog } from "./ShareDialog";
-import { useCreateDocument, CreateDocumentDto } from "@/hooks/documents/useCreateDocument";
-import { useMe } from "@/hooks/auth/useAuth";
-import { useToast } from "@/hooks/shared/useToast";
 
 const DocumentEditor: FC = () => {
 	const router = useRouter();
 	const { data: user } = useMe();
-	const { toast } = useToast()
+	const { toast } = useToast();
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
@@ -44,8 +47,8 @@ const DocumentEditor: FC = () => {
 			toast({
 				title: "User is not logged in",
 				className: "bg-orange-800 text-white font-bold text-xl leading-[125%]",
-				duration: 2000
-			})
+				duration: 2000,
+			});
 			return;
 		}
 
@@ -60,21 +63,24 @@ const DocumentEditor: FC = () => {
 				toast({
 					title: "New document was created",
 					className: "bg-green-800 text-white font-bold text-xl leading-[125%]",
-					duration: 2000
-				})
+					duration: 2000,
+				});
 				router.push("/dashboard");
 			},
 			onError: (error) => {
 				toast({
 					title: "Failed to create document",
 					className: "bg-red-800 text-white font-bold text-xl leading-[125%]",
-					duration: 2000
-				})
+					duration: 2000,
+				});
 			},
 		});
 	};
 
-	const handleShareDocument = async (email: string, role: "editor" | "viewer") => {
+	const handleShareDocument = async (
+		email: string,
+		role: "editor" | "viewer",
+	) => {
 		// TODO
 	};
 
@@ -103,8 +109,16 @@ const DocumentEditor: FC = () => {
 							/>
 						</div>
 						<div className="flex items-center space-x-3">
-							<Button onClick={handleSave} size="sm" disabled={createDocumentMutation.isPending}>
-								{createDocumentMutation.isPending ? <Loader2 className="animate-spin w-8 h-8" /> : "Save"}
+							<Button
+								onClick={handleSave}
+								size="sm"
+								disabled={createDocumentMutation.isPending}
+							>
+								{createDocumentMutation.isPending ? (
+									<Loader2 className="animate-spin w-8 h-8" />
+								) : (
+									"Save"
+								)}
 							</Button>
 							<Button
 								onClick={handleShare}

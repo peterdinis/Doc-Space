@@ -15,8 +15,8 @@ export const folderSchema = z.object({
 	ownerId: z.string(),
 	createdAt: z.string(),
 	updatedAt: z.string(),
-	documents: z.array(z.any()), 
-	owner: z.any(), 
+	documents: z.array(z.any()),
+	owner: z.any(),
 });
 
 export const folderListResponseSchema = z.object({

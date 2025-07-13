@@ -1,15 +1,25 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { FolderListResponse, folderListResponseSchema, Folder, folderSchema, CreateFolderDto, createFolderSchema, UpdateFolderDto, updateFolderSchema } from "@/schemas/folderSchemas";
-
+import {
+	type CreateFolderDto,
+	createFolderSchema,
+	type Folder,
+	type FolderListResponse,
+	folderListResponseSchema,
+	folderSchema,
+	type UpdateFolderDto,
+	updateFolderSchema,
+} from "@/schemas/folderSchemas";
 
 export function useFolders(ownerId: string, search = "", page = 1, limit = 10) {
 	return useQuery<FolderListResponse>({
 		queryKey: ["folders", ownerId, search, page, limit],
 		queryFn: async () => {
-			const res = await api(`/folders?ownerId=${ownerId}&search=${search}&page=${page}&limit=${limit}`);
+			const res = await api(
+				`/folders?ownerId=${ownerId}&search=${search}&page=${page}&limit=${limit}`,
+			);
 			return folderListResponseSchema.parse(res);
 		},
 	});
@@ -50,7 +60,7 @@ export function useUpdateFolder() {
 	return useMutation<Folder, Error, { id: string; data: UpdateFolderDto }>({
 		mutationKey: ["updateFolder"],
 		mutationFn: async ({ id, data }) => {
-			updateFolderSchema.parse(data); 
+			updateFolderSchema.parse(data);
 			const res = await api(`/folders/${id}`, {
 				method: "PUT",
 				body: JSON.stringify(data),

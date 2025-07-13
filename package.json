@@ -23,6 +23,7 @@
 		"@radix-ui/react-tooltip": "^1.2.7",
 		"@tanstack/react-query": "^5.81.5",
 		"@tanstack/react-query-devtools": "^5.81.5",
+		"@testing-library/react-hooks": "^8.0.1",
 		"@tiptap/extension-color": "^2.25.0",
 		"@tiptap/extension-highlight": "^2.25.0",
 		"@tiptap/extension-image": "^2.25.0",

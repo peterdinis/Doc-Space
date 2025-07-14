@@ -56,7 +56,6 @@ export const AppSidebar = () => {
 	const { state } = useSidebar();
 	const [open, setOpen] = useState(false);
 	const { toast } = useToast();
-	const [searchTerm, setSearchTerm] = useState("");
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const { data: user } = useMe()
 	const {data:folderData, isLoading: folderLoading} = useFolders(user?.id!)
@@ -75,10 +74,6 @@ export const AppSidebar = () => {
 	};
 
 	const isCollapsed = state === "collapsed";
-
-	const filteredDocuments = documents.filter((doc) =>
-		doc.title.toLowerCase().includes(searchTerm.toLowerCase()),
-	);
 
 	return (
 		<Sidebar className="border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
@@ -99,20 +94,6 @@ export const AppSidebar = () => {
 			</SidebarHeader>
 
 			<SidebarContent className="p-2">
-				{!isCollapsed && (
-					<div className="mb-4 px-2">
-						<div className="relative">
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-							<Input
-								placeholder="Search documents..."
-								value={searchTerm}
-								onChange={(e) => setSearchTerm(e.target.value)}
-								className="pl-10 h-9 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600"
-							/>
-						</div>
-					</div>
-				)}
-
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>
@@ -147,34 +128,36 @@ export const AppSidebar = () => {
 						</div>
 					</SidebarGroupLabel>
 
-					{expandedSections.documents && !isCollapsed && (
-						<SidebarGroupContent className="animate-accordion-down">
-							<SidebarMenu>
-								{filteredDocuments.slice(0, 5).map((document) => (
-									<SidebarMenuItem key={document.id}>
-										<SidebarMenuButton
-											asChild
-											className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-move"
-											draggable
-										>
-											<Link
-												href={`/document/${document.id}`}
-												className="flex items-center justify-between w-full"
-											>
-												<div className="flex items-center flex-1 min-w-0">
-													<FileText className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2 flex-shrink-0" />
-													<span className="truncate text-sm">
-														{document.title}
-													</span>
-												</div>
-												<MoreHorizontal className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-											</Link>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								))}
-							</SidebarMenu>
-						</SidebarGroupContent>
-					)}
+					{/*
+{expandedSections.documents && !isCollapsed && (
+	<SidebarGroupContent className="animate-accordion-down">
+		<SidebarMenu>
+			{filteredDocuments.slice(0, 5).map((document) => (
+				<SidebarMenuItem key={document.id}>
+					<SidebarMenuButton
+						asChild
+						className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-move"
+						draggable
+					>
+						<Link
+							href={`/document/${document.id}`}
+							className="flex items-center justify-between w-full"
+						>
+							<div className="flex items-center flex-1 min-w-0">
+								<FileText className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2 flex-shrink-0" />
+								<span className="truncate text-sm">
+									{document.title}
+								</span>
+							</div>
+							<MoreHorizontal className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+						</Link>
+					</SidebarMenuButton>
+				</SidebarMenuItem>
+			))}
+		</SidebarMenu>
+	</SidebarGroupContent>
+)}
+*/}
 				</SidebarGroup>
 
 				<SidebarGroup>
@@ -289,7 +272,7 @@ export const AppSidebar = () => {
 						</SidebarGroupContent>
 					)}
 				</SidebarGroup>
-				
+
 				<SidebarGroup>
 					<SidebarGroupLabel
 						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"

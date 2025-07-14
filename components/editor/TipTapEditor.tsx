@@ -65,14 +65,12 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 		editorProps: {
 			attributes: {
 				class:
-					"prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-[500px] p-8",
+					"prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-[500px] p-8 bg-white dark:bg-background text-black dark:text-white dark:prose-invert",
 			},
 		},
 	});
 
-	if (!editor) {
-		return null;
-	}
+	if (!editor) return null;
 
 	const addImage = () => {
 		const url = window.prompt("Enter image URL:");
@@ -85,9 +83,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 		const previousUrl = editor.getAttributes("link").href;
 		const url = window.prompt("Enter URL:", previousUrl);
 
-		if (url === null) {
-			return;
-		}
+		if (url === null) return;
 
 		if (url === "") {
 			editor.chain().focus().extendMarkRange("link").unsetLink().run();
@@ -115,13 +111,13 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 	];
 
 	return (
-		<div className="border border-gray-200 rounded-lg bg-white shadow-sm">
+		<div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-muted shadow-sm">
 			<ScrollArea>
 				{/* Toolbar */}
-				<div className="border-b border-gray-200 p-3 bg-gray-50 rounded-t-lg">
+				<div className="border-b border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-background rounded-t-lg">
 					<div className="flex flex-wrap items-center gap-2">
 						{/* Text Formatting */}
-						<div className="flex items-center gap-1 border-r border-gray-300 pr-2">
+						<div className="flex items-center gap-1 border-r border-gray-300 dark:border-gray-600 pr-2">
 							<Button
 								variant={editor.isActive("bold") ? "default" : "ghost"}
 								size="sm"
@@ -157,7 +153,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 						</div>
 
 						{/* Alignment */}
-						<div className="flex items-center gap-1 border-r border-gray-300 pr-2">
+						<div className="flex items-center gap-1 border-r border-gray-300 dark:border-gray-600 pr-2">
 							<Button
 								variant={
 									editor.isActive({ textAlign: "left" }) ? "default" : "ghost"
@@ -211,7 +207,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 						</div>
 
 						{/* Lists and Blocks */}
-						<div className="flex items-center gap-1 border-r border-gray-300 pr-2">
+						<div className="flex items-center gap-1 border-r border-gray-300 dark:border-gray-600 pr-2">
 							<Button
 								variant={editor.isActive("bulletList") ? "default" : "ghost"}
 								size="sm"
@@ -247,7 +243,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 						</div>
 
 						{/* Colors and Highlighting */}
-						<div className="flex items-center gap-1 border-r border-gray-300 pr-2">
+						<div className="flex items-center gap-1 border-r border-gray-300 dark:border-gray-600 pr-2">
 							<div className="relative">
 								<Button
 									variant="ghost"
@@ -258,7 +254,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 									<Palette className="h-4 w-4" />
 								</Button>
 								{showColorPicker && (
-									<div className="absolute top-10 left-0 z-10 bg-white border border-gray-200 rounded-lg p-2 shadow-lg">
+									<div className="absolute top-10 left-0 z-10 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-600 rounded-lg p-2 shadow-lg">
 										<div className="grid grid-cols-7 gap-1">
 											{colors.map((color) => (
 												<button
@@ -286,7 +282,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 						</div>
 
 						{/* Links and Media */}
-						<div className="flex items-center gap-1 border-r border-gray-300 pr-2">
+						<div className="flex items-center gap-1 border-r border-gray-300 dark:border-gray-600 pr-2">
 							<Button
 								variant={editor.isActive("link") ? "default" : "ghost"}
 								size="sm"

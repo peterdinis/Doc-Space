@@ -58,7 +58,7 @@ export const AppSidebar = () => {
 	const { toast } = useToast();
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const { data: user } = useMe()
-	const {data:folderData, isLoading: folderLoading} = useFolders(user?.id!)
+	const { data: folderData, isLoading: folderLoading } = useFolders(user?.id!)
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,
@@ -128,36 +128,36 @@ export const AppSidebar = () => {
 						</div>
 					</SidebarGroupLabel>
 
-					{/*
-{expandedSections.documents && !isCollapsed && (
-	<SidebarGroupContent className="animate-accordion-down">
-		<SidebarMenu>
-			{filteredDocuments.slice(0, 5).map((document) => (
-				<SidebarMenuItem key={document.id}>
-					<SidebarMenuButton
-						asChild
-						className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-move"
-						draggable
-					>
-						<Link
-							href={`/document/${document.id}`}
-							className="flex items-center justify-between w-full"
-						>
-							<div className="flex items-center flex-1 min-w-0">
-								<FileText className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2 flex-shrink-0" />
-								<span className="truncate text-sm">
-									{document.title}
-								</span>
-							</div>
-							<MoreHorizontal className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-						</Link>
-					</SidebarMenuButton>
-				</SidebarMenuItem>
-			))}
-		</SidebarMenu>
-	</SidebarGroupContent>
-)}
-*/}
+									{/*
+				{expandedSections.documents && !isCollapsed && (
+					<SidebarGroupContent className="animate-accordion-down">
+						<SidebarMenu>
+							{filteredDocuments.slice(0, 5).map((document) => (
+								<SidebarMenuItem key={document.id}>
+									<SidebarMenuButton
+										asChild
+										className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-move"
+										draggable
+									>
+										<Link
+											href={`/document/${document.id}`}
+											className="flex items-center justify-between w-full"
+										>
+											<div className="flex items-center flex-1 min-w-0">
+												<FileText className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2 flex-shrink-0" />
+												<span className="truncate text-sm">
+													{document.title}
+												</span>
+											</div>
+											<MoreHorizontal className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+										</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							))}
+						</SidebarMenu>
+					</SidebarGroupContent>
+				)}
+				*/}
 				</SidebarGroup>
 
 				<SidebarGroup>

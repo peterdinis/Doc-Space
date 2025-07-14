@@ -313,7 +313,7 @@ export const AppSidebar = () => {
 									try {
 										await createFolder.mutateAsync({
 											name: folderName,
-											ownerId: "current-user-id", // ← sem daj reálne ID užívateľa
+											ownerId: user?.id!
 										});
 										toast({
 											title: "Folder created",

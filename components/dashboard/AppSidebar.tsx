@@ -66,7 +66,6 @@ export const AppSidebar = () => {
 		connections: true,
 		documents: true,
 	});
-	const [draggedDocument, setDraggedDocument] = useState<Document | null>(null);
 
 	const toggleSection = (section: keyof typeof expandedSections) => {
 		setExpandedSections((prev) => ({
@@ -272,7 +271,7 @@ export const AppSidebar = () => {
 												</>
 											)}
 										</SidebarMenuButton>
-										
+
 										{!isCollapsed && folder.documents.length > 0 && (
 											<div className="ml-6 mt-1 space-y-1">
 												{folder.documents.map((doc) => (

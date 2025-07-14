@@ -16,12 +16,25 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import { useMe } from "@/hooks/auth/useAuth";
 import DocumentList from "../documents/DocumentList";
 import { AppSidebar } from "./AppSidebar";
 
 const DashboardWrapper: FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");
+	const [filterBy, setFilterBy] = useState("all");
 	const [page, setPage] = useState(1);
 	const pageCount = 10;
 	const { data: user } = useMe();
@@ -56,7 +69,7 @@ const DashboardWrapper: FC = () => {
 					</header>
 
 					<main className="flex-1 p-6">
-						<div className="flex items-center space-x-4 mb-6">
+						<div className="flex flex-wrap items-center gap-4 mb-6">
 							<div className="relative flex-1 max-w-md">
 								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
 								<Input
@@ -66,10 +79,31 @@ const DashboardWrapper: FC = () => {
 									className="pl-10"
 								/>
 							</div>
-							<Button variant="outline" size="sm">
-								<Filter className="h-4 w-4 mr-2" />
-								Filter
-							</Button>
+
+							<Popover>
+								<PopoverTrigger asChild>
+									<Button variant="outline" size="sm">
+										<Filter className="h-4 w-4 mr-2" />
+										Filter
+									</Button>
+								</PopoverTrigger>
+								<PopoverContent className="w-[160px] p-2">
+									<Select
+										value={filterBy}
+										onValueChange={(val) => setFilterBy(val)}
+									>
+										<SelectTrigger className="w-full">
+											<SelectValue placeholder="Filter" />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="all">All</SelectItem>
+											<SelectItem value="text">Text</SelectItem>
+											<SelectItem value="pdf">PDF</SelectItem>
+											<SelectItem value="spreadsheet">Spreadsheet</SelectItem>
+										</SelectContent>
+									</Select>
+								</PopoverContent>
+							</Popover>
 						</div>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">

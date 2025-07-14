@@ -23,8 +23,7 @@ import { ShareDialog } from "./ShareDialog";
 const DocumentEditor: FC = () => {
 	const router = useRouter();
 	const { data: user } = useMe();
-
-	console.log("U", user);
+	
 	const { toast } = useToast();
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FileText, Loader2 } from "lucide-react";
+import { Eye, EyeOff, FileText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
@@ -11,6 +11,7 @@ import { useLogin } from "@/hooks/auth/useAuth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useState } from "react";
 
 const loginSchema = z.object({
 	email: z.string().email("Invalid email"),
@@ -22,6 +23,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 const LoginForm: FC = () => {
 	const loginMutation = useLogin();
 	const router = useRouter();
+	const [showPassword, setShowPassword] = useState(false);
 
 	const {
 		register,
@@ -75,13 +77,23 @@ const LoginForm: FC = () => {
 							<Label htmlFor="password" className="text-gray-800">
 								Password
 							</Label>
-							<Input
-								id="password"
-								type="password"
-								placeholder="Enter your password"
-								{...register("password")}
-								className="mt-2 text-gray-800"
-							/>
+							<div className="relative">
+								<Input
+									id="password"
+									type={showPassword ? "text" : "password"}
+									placeholder="Enter your password"
+									{...register("password")}
+									className="mt-2 text-gray-800 pr-10"
+								/>
+								<button
+									type="button"
+									onClick={() => setShowPassword(!showPassword)}
+									className="absolute right-3 top-[14px] text-gray-600 hover:text-gray-800"
+									tabIndex={-1}
+								>
+									{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+								</button>
+							</div>
 							{errors.password && (
 								<p className="text-sm text-red-500 mt-1">
 									{errors.password.message}

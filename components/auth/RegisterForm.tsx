@@ -1,12 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FileText } from "lucide-react";
+import { Eye, EyeOff, FileText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
 import { useRegister } from "@/hooks/auth/useAuth";
 import { useToast } from "@/hooks/shared/useToast";
 import { Button } from "../ui/button";
@@ -23,9 +24,10 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const RegisterForm: FC = () => {
 	const registerMutation = useRegister();
-
 	const router = useRouter();
 	const { toast } = useToast();
+	const [showPassword, setShowPassword] = useState(false);
+
 	const {
 		register,
 		handleSubmit,
@@ -97,13 +99,23 @@ const RegisterForm: FC = () => {
 							<Label htmlFor="password" className="text-gray-800">
 								Password
 							</Label>
-							<Input
-								id="password"
-								type="password"
-								placeholder="Create a password"
-								{...register("password")}
-								className="mt-2 text-gray-800"
-							/>
+							<div className="relative">
+								<Input
+									id="password"
+									type={showPassword ? "text" : "password"}
+									placeholder="Create a password"
+									{...register("password")}
+									className="mt-2 text-gray-800 pr-10"
+								/>
+								<button
+									type="button"
+									onClick={() => setShowPassword(!showPassword)}
+									className="absolute right-3 top-[14px] text-gray-600 hover:text-gray-800"
+									tabIndex={-1}
+								>
+									{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+								</button>
+							</div>
 							{errors.password && (
 								<p className="text-sm text-red-500 mt-1">
 									{errors.password.message}
@@ -124,7 +136,7 @@ const RegisterForm: FC = () => {
 						disabled={registerMutation.isPending}
 					>
 						{registerMutation.isPending
-							? "Creating account..."
+							? <Loader2 className="animate-spin w-8 h-8" />
 							: "Create account"}
 					</Button>
 

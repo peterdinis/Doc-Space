@@ -29,8 +29,10 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/shared/useToast";
-import type { Document } from "@/types/document";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Document } from "@/types/documentTypes";
+import { useCreateFolder } from "@/hooks/folders/useFolders";
+import { useMe } from "@/hooks/auth/useAuth";
 
 interface Folder {
 	id: string;
@@ -86,6 +88,8 @@ export const AppSidebar = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [documents, setDocuments] = useState<Document[]>([]);
 	const [folders, setFolders] = useState<Folder[]>(mockFolders);
+	const { data: user } = useMe()
+	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,
 		connections: true,
@@ -141,9 +145,9 @@ export const AppSidebar = () => {
 						documentsCount: Math.max(
 							0,
 							folder.documentsCount -
-								(folder.documents.some((doc) => doc.id === draggedDocument.id)
-									? 1
-									: 0),
+							(folder.documents.some((doc) => doc.id === draggedDocument.id)
+								? 1
+								: 0),
 						),
 					};
 				}
@@ -300,16 +304,32 @@ export const AppSidebar = () => {
 							</DialogHeader>
 
 							<form
-								onSubmit={(e) => {
+								onSubmit={async (e) => {
 									e.preventDefault();
 									const form = e.target as HTMLFormElement;
 									const formData = new FormData(form);
-									const folderName =
-										formData.get("folderName")?.toString() || "";
+									const folderName = formData.get("folderName")?.toString() || "";
 
-									console.log("Pridaný folder:", folderName);
-
-									setOpen(false);
+									try {
+										await createFolder.mutateAsync({
+											name: folderName,
+											ownerId: "current-user-id", // ← sem daj reálne ID užívateľa
+										});
+										toast({
+											title: "Folder created",
+											description: `Folder "${folderName}" has been created successfully.`,
+											duration: 2000
+										});
+									} catch (err) {
+										toast({
+											title: "Error creating folder",
+											description: (err as Error).message,
+											variant: "destructive",
+										});
+									} finally {
+										form.reset();
+										setOpen(false);
+									}
 								}}
 							>
 								<Input

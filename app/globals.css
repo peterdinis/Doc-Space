@@ -169,3 +169,26 @@
 		letter-spacing: var(--tracking-normal);
 	}
 }
+
+.tiptap pre {
+  position: relative;
+  background-color: #1e1e1e;
+  color: #f8f8f2;
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75em;
+}

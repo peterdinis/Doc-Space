@@ -26,7 +26,7 @@ const Hero: FC = () => {
 							</span>
 						</div>
 
-						<h2 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+						<h2 className="text-5xl lg:text-6xl font-bold dark:text-sky-100 text-gray-900 leading-tight">
 							Create,
 							<span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
 								{" "}
@@ -37,7 +37,7 @@ const Hero: FC = () => {
 							Share Documents
 						</h2>
 
-						<p className="text-xl text-gray-600 leading-relaxed">
+						<p className="text-xl text-gray-600 dark:text-sky-100 pt-4 leading-[155%]">
 							DocSpace is a modern document collaboration platform that lets you
 							create, edit, and share documents in real-time with your team.
 							Simple, powerful, and secure.

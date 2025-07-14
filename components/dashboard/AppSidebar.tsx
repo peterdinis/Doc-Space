@@ -12,7 +12,6 @@ import {
 	Users,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,15 +30,8 @@ import {
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Document } from "@/types/documentTypes";
-import { useCreateFolder } from "@/hooks/folders/useFolders";
+import { useCreateFolder, useFolders } from "@/hooks/folders/useFolders";
 import { useMe } from "@/hooks/auth/useAuth";
-
-interface Folder {
-	id: string;
-	name: string;
-	documentsCount: number;
-	documents: Document[];
-}
 
 interface Connection {
 	id: string;
@@ -48,27 +40,6 @@ interface Connection {
 	avatar?: string;
 	isOnline: boolean;
 }
-
-const mockFolders: Folder[] = [
-	{
-		id: "1",
-		name: "Work Projects",
-		documentsCount: 5,
-		documents: [],
-	},
-	{
-		id: "2",
-		name: "Personal",
-		documentsCount: 3,
-		documents: [],
-	},
-	{
-		id: "3",
-		name: "Shared with me",
-		documentsCount: 8,
-		documents: [],
-	},
-];
 
 const mockConnections: Connection[] = [
 	{
@@ -87,8 +58,8 @@ export const AppSidebar = () => {
 	const { toast } = useToast();
 	const [searchTerm, setSearchTerm] = useState("");
 	const [documents, setDocuments] = useState<Document[]>([]);
-	const [folders, setFolders] = useState<Folder[]>(mockFolders);
 	const { data: user } = useMe()
+	const {data:folderData, isLoading: folderLoading} = useFolders(user?.id!)
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,
@@ -102,65 +73,6 @@ export const AppSidebar = () => {
 			...prev,
 			[section]: !prev[section],
 		}));
-	};
-
-	const handleDragStart = (e: React.DragEvent, document: Document) => {
-		setDraggedDocument(document);
-		e.dataTransfer.effectAllowed = "move";
-	};
-
-	const handleDragOver = (e: React.DragEvent) => {
-		e.preventDefault();
-		e.dataTransfer.dropEffect = "move";
-	};
-
-	const handleDrop = (e: React.DragEvent, folderId: string) => {
-		e.preventDefault();
-		if (!draggedDocument) return;
-
-		const targetFolder = folders.find((f) => f.id === folderId);
-		if (!targetFolder) return;
-
-		// Update folders state
-		setFolders((prev) =>
-			prev.map((folder) => {
-				if (folder.id === folderId) {
-					const isAlreadyInFolder = folder.documents.some(
-						(doc) => doc.id === draggedDocument.id,
-					);
-					if (!isAlreadyInFolder) {
-						return {
-							...folder,
-							documents: [...folder.documents, draggedDocument],
-							documentsCount: folder.documentsCount + 1,
-						};
-					}
-				} else {
-					// Remove from other folders
-					return {
-						...folder,
-						documents: folder.documents.filter(
-							(doc) => doc.id !== draggedDocument.id,
-						),
-						documentsCount: Math.max(
-							0,
-							folder.documentsCount -
-							(folder.documents.some((doc) => doc.id === draggedDocument.id)
-								? 1
-								: 0),
-						),
-					};
-				}
-				return folder;
-			}),
-		);
-
-		toast({
-			title: "Document moved",
-			description: `"${draggedDocument.title}" has been moved to "${targetFolder.name}".`,
-		});
-
-		setDraggedDocument(null);
 	};
 
 	const isCollapsed = state === "collapsed";
@@ -247,7 +159,6 @@ export const AppSidebar = () => {
 											asChild
 											className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-move"
 											draggable
-											onDragStart={(e) => handleDragStart(e, document)}
 										>
 											<Link
 												href={`/document/${document.id}`}
@@ -349,25 +260,19 @@ export const AppSidebar = () => {
 					{expandedSections.folders && (
 						<SidebarGroupContent className="animate-accordion-down">
 							<SidebarMenu>
-								{folders.map((folder) => (
+								{folderData && folderData.data.map((folder) => (
 									<SidebarMenuItem key={folder.id}>
 										<SidebarMenuButton
 											className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800"
-											onDragOver={handleDragOver}
-											onDrop={(e) => handleDrop(e, folder.id)}
 										>
 											<Folder className="h-4 w-4 text-gray-500 dark:text-gray-400" />
 											{!isCollapsed && (
 												<>
 													<span className="flex-1">{folder.name}</span>
-													<span className="text-xs text-gray-400 dark:text-gray-500">
-														{folder.documentsCount}
-													</span>
 												</>
 											)}
 										</SidebarMenuButton>
-
-										{/* Show documents in folder */}
+										
 										{!isCollapsed && folder.documents.length > 0 && (
 											<div className="ml-6 mt-1 space-y-1">
 												{folder.documents.map((doc) => (

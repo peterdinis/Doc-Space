@@ -99,7 +99,6 @@ export const AppSidebar = () => {
 			</SidebarHeader>
 
 			<SidebarContent className="p-2">
-				{/* Search */}
 				{!isCollapsed && (
 					<div className="mb-4 px-2">
 						<div className="relative">
@@ -132,7 +131,6 @@ export const AppSidebar = () => {
 					</SidebarGroupContent>
 				</SidebarGroup>
 
-				{/* Documents */}
 				<SidebarGroup>
 					<SidebarGroupLabel
 						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
@@ -291,8 +289,7 @@ export const AppSidebar = () => {
 						</SidebarGroupContent>
 					)}
 				</SidebarGroup>
-
-				{/* Connections */}
+				
 				<SidebarGroup>
 					<SidebarGroupLabel
 						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"

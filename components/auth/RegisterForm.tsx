@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, FileText } from "lucide-react";
+import { Eye, EyeOff, FileText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
@@ -136,7 +136,7 @@ const RegisterForm: FC = () => {
 						disabled={registerMutation.isPending}
 					>
 						{registerMutation.isPending
-							? "Creating account..."
+							? <Loader2 className="animate-spin w-8 h-8" />
 							: "Create account"}
 					</Button>
 

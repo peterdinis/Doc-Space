@@ -35,7 +35,7 @@ export const AppSidebar = () => {
 	const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
 	const { toast } = useToast();
 	const { data: user } = useMe();
-	const { data: folderData } = useFolders(user?.id!);
+	const { data: folderData } = useFolders(user?.userId!);
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,
@@ -51,6 +51,8 @@ export const AppSidebar = () => {
 	};
 
 	const isCollapsed = state === "collapsed";
+
+	console.log(user)
 
 	return (
 		<Sidebar className="border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
@@ -147,7 +149,7 @@ export const AppSidebar = () => {
 									try {
 										await createFolder.mutateAsync({
 											name: folderName,
-											ownerId: user?.id!,
+											ownerId: user?.userId!
 										});
 										toast({
 											title: "Folder created",

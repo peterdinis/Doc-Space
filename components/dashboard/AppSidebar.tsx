@@ -5,10 +5,7 @@ import {
 	ChevronRight,
 	FileText,
 	Folder,
-	MoreHorizontal,
 	Plus,
-	Search,
-	User,
 	Users,
 } from "lucide-react";
 import Link from "next/link";
@@ -29,36 +26,15 @@ import {
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { Document } from "@/types/documentTypes";
 import { useCreateFolder, useFolders } from "@/hooks/folders/useFolders";
 import { useMe } from "@/hooks/auth/useAuth";
-
-interface Connection {
-	id: string;
-	name: string;
-	email: string;
-	avatar?: string;
-	isOnline: boolean;
-}
-
-const mockConnections: Connection[] = [
-	{
-		id: "1",
-		name: "Alice Johnson",
-		email: "alice@example.com",
-		isOnline: true,
-	},
-	{ id: "2", name: "Bob Smith", email: "bob@example.com", isOnline: false },
-	{ id: "3", name: "Carol Davis", email: "carol@example.com", isOnline: true },
-];
 
 export const AppSidebar = () => {
 	const { state } = useSidebar();
 	const [open, setOpen] = useState(false);
 	const { toast } = useToast();
-	const [documents, setDocuments] = useState<Document[]>([]);
 	const { data: user } = useMe()
-	const { data: folderData, isLoading: folderLoading } = useFolders(user?.id!)
+	const { data: folderData} = useFolders(user?.id!)
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,
@@ -85,9 +61,6 @@ export const AppSidebar = () => {
 							<h1 className="text-lg font-bold text-gray-900 dark:text-white">
 								DocSpace
 							</h1>
-							<p className="text-sm text-gray-500 dark:text-gray-400">
-								Welcome, abcd
-							</p>
 						</div>
 					)}
 				</div>
@@ -128,7 +101,7 @@ export const AppSidebar = () => {
 						</div>
 					</SidebarGroupLabel>
 
-									{/*
+					{/*
 				{expandedSections.documents && !isCollapsed && (
 					<SidebarGroupContent className="animate-accordion-down">
 						<SidebarMenu>
@@ -287,18 +260,16 @@ export const AppSidebar = () => {
 							<Users className="h-4 w-4 mr-2" />
 							{!isCollapsed && <span>Connections</span>}
 						</div>
-						{!isCollapsed && (
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-6 w-6 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
-							>
-								<Plus className="h-3 w-3" />
-							</Button>
-						)}
+						<Button
+							variant="ghost"
+							size="sm"
+							className="h-6 w-6 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
+						>
+							<Plus className="h-3 w-3" />
+						</Button>
 					</SidebarGroupLabel>
 
-					{expandedSections.connections && (
+					{/*{expandedSections.connections && (
 						<SidebarGroupContent className="animate-accordion-down">
 							<SidebarMenu>
 								{mockConnections.map((connection) => (
@@ -326,6 +297,7 @@ export const AppSidebar = () => {
 							</SidebarMenu>
 						</SidebarGroupContent>
 					)}
+						*/}
 				</SidebarGroup>
 			</SidebarContent>
 		</Sidebar>

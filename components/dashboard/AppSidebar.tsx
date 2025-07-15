@@ -145,7 +145,7 @@ export const AppSidebar = () => {
 									const folderName =
 										formData.get("folderName")?.toString() || "";
 									try {
-										await createFolder.mutateAsync({
+										await createFolder.mutate({
 											name: folderName,
 											ownerId: user?.userId!,
 											documents: []
@@ -154,6 +154,7 @@ export const AppSidebar = () => {
 											title: "Folder created",
 											description: `Folder "${folderName}" has been created successfully.`,
 											duration: 2000,
+											className: "bg-green-800 text-white font-bold text-xl"
 										});
 									} catch (err) {
 										toast({

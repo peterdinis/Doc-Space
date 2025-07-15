@@ -22,6 +22,7 @@ export function useFolders(ownerId: string, search = "", page = 1, limit = 10) {
 			);
 			return folderListResponseSchema.parse(res);
 		},
+		enabled: !!ownerId, 
 	});
 }
 

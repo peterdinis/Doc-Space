@@ -26,12 +26,12 @@ const DocumentList: FC = () => {
 	if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />;
 	if (isError) return <p>Failed to load documents.</p>;
 	if (!documents || documents.length === 0)
-	return (
-		<div className="flex items-center space-x-2 text-muted-foreground">
-			<Ghost className="animate-bounce w-6 h-6" />
-			<p>No documents found.</p>
-		</div>
-	);
+		return (
+			<div className="flex items-center space-x-2 text-muted-foreground">
+				<Ghost className="animate-bounce w-6 h-6" />
+				<p>No documents found.</p>
+			</div>
+		);
 
 	return (
 		<motion.div

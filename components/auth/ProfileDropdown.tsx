@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/shared/useToast";
 const ProfileDropdown: FC = () => {
 	const { data: user, isLoading } = useMe();
 	const { toast } = useToast();
-	
+
 	const handleLogout = () => {
 		localStorage.removeItem("access_token");
 		window.location.replace("/login");

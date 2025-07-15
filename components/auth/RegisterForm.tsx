@@ -5,9 +5,9 @@ import { Eye, EyeOff, FileText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
 import { useRegister } from "@/hooks/auth/useAuth";
 import { useToast } from "@/hooks/shared/useToast";
 import { Button } from "../ui/button";
@@ -135,9 +135,11 @@ const RegisterForm: FC = () => {
 						className="w-full"
 						disabled={registerMutation.isPending}
 					>
-						{registerMutation.isPending
-							? <Loader2 className="animate-spin w-8 h-8" />
-							: "Create account"}
+						{registerMutation.isPending ? (
+							<Loader2 className="animate-spin w-8 h-8" />
+						) : (
+							"Create account"
+						)}
 					</Button>
 
 					<div className="text-center">

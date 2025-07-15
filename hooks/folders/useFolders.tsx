@@ -13,12 +13,12 @@ import {
 	updateFolderSchema,
 } from "@/types/folderTypes";
 
-export function useFolders(ownerId: string, search = "", page = 1, limit = 10) {
+export function useFolders(ownerId: string, page = 1, limit = 10) {
 	return useQuery<FolderListResponse>({
-		queryKey: ["folders", ownerId, search, page, limit],
+		queryKey: ["folders", ownerId, page, limit],
 		queryFn: async () => {
 			const res = await api(
-				`/folders?ownerId=${ownerId}&search=${search}&page=${page}&limit=${limit}`,
+				`/folders?ownerId=${ownerId}&page=${page}&limit=${limit}`,
 			);
 			return folderListResponseSchema.parse(res);
 		},

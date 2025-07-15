@@ -35,10 +35,9 @@ export const AppSidebar = () => {
 	const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
 	const { toast } = useToast();
 	const { data: user } = useMe();
+	
 	const { data: folderData } = useFolders(user?.userId!);
 
-	console.log("FD", folderData)
-	console.log(user?.userId, "RORORO")
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,

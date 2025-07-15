@@ -17,7 +17,6 @@ export function useFolders(ownerId: string, page = 1, limit = 10) {
 	return useQuery<FolderListResponse>({
 		queryKey: ["folders", ownerId, page, limit],
 		queryFn: async () => {
-			console.log("OWNERID", ownerId)
 			const res = await api(
 				`/folders?ownerId=${ownerId}&page=${page}&limit=${limit}`,
 			);

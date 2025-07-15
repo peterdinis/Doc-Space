@@ -10,14 +10,14 @@ import {
 	PaginationContent,
 	PaginationItem,
 	PaginationLink,
-	PaginationPrevious,
 	PaginationNext,
+	PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
-	SidebarInset,
-	SidebarProvider,
-	SidebarTrigger,
-} from "@/components/ui/sidebar";
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import {
 	Select,
 	SelectContent,
@@ -26,14 +26,14 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
+	SidebarInset,
+	SidebarProvider,
+	SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { useMe } from "@/hooks/auth/useAuth";
+import { useMediaQuery } from "@/hooks/shared/useMediaQuery";
 import DocumentList from "../documents/DocumentList";
 import { AppSidebar } from "./AppSidebar";
-import { useMediaQuery } from "@/hooks/shared/useMediaQuery";
 
 const DashboardWrapper: FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");

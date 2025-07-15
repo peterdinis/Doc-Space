@@ -24,10 +24,10 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
+import { useMe } from "@/hooks/auth/useAuth";
+import { useCreateFolder, useFolders } from "@/hooks/folders/useFolders";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { useCreateFolder, useFolders } from "@/hooks/folders/useFolders";
-import { useMe } from "@/hooks/auth/useAuth";
 
 export const AppSidebar = () => {
 	const { state } = useSidebar();
@@ -142,7 +142,8 @@ export const AppSidebar = () => {
 									e.preventDefault();
 									const form = e.target as HTMLFormElement;
 									const formData = new FormData(form);
-									const folderName = formData.get("folderName")?.toString() || "";
+									const folderName =
+										formData.get("folderName")?.toString() || "";
 
 									try {
 										await createFolder.mutateAsync({
@@ -215,7 +216,10 @@ export const AppSidebar = () => {
 				</SidebarGroup>
 
 				<SidebarGroup>
-					<Dialog open={connectionDialogOpen} onOpenChange={setConnectionDialogOpen}>
+					<Dialog
+						open={connectionDialogOpen}
+						onOpenChange={setConnectionDialogOpen}
+					>
 						<SidebarGroupLabel
 							className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
 							onClick={() => toggleSection("connections")}

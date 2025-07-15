@@ -5,13 +5,13 @@ import { Eye, EyeOff, FileText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useLogin } from "@/hooks/auth/useAuth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useState } from "react";
 
 const loginSchema = z.object({
 	email: z.string().email("Invalid email"),

@@ -9,7 +9,7 @@ import {
 	Users,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -35,8 +35,17 @@ export const AppSidebar = () => {
 	const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
 	const { toast } = useToast();
 	const { data: user } = useMe();
-	
-	const { data: folderData } = useFolders(user?.userId!);
+
+	const userId = useMemo(() => {
+		return user?.userId
+	}, [user]);
+
+	const { data: folderData, isLoading, isError } = useFolders(userId!);
+
+if (isLoading) return <div>Načítání složek...</div>;
+if (isError) return <div>Chyba při načítání složek</div>;
+
+	console.log("FD", folderData)
 
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({

@@ -30,6 +30,7 @@ import { useMe } from "@/hooks/auth/useAuth";
 import { useCreateFolder, useDeleteFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AppSidebar = () => {
 	const { state } = useSidebar();
@@ -43,7 +44,7 @@ export const AppSidebar = () => {
 	}, [user]);
 
 	const { data: folderData, isLoading } = useLoggedUserFolders(userId!);
-
+	const queryClient = useQueryClient();
 	const deleteFolder = useDeleteFolder();
 
 	const createFolder = useCreateFolder();
@@ -212,7 +213,10 @@ export const AppSidebar = () => {
 																duration: 2000,
 																className: "bg-green-800 text-white font-bold text-base leading-[130%]"
 															})
-
+															queryClient.refetchQueries({
+																queryKey: ["folders"]
+															})
+															window.location.reload()
 														}} className="cursor-pointer text-red-700 dark:text-red-200" />
 													</>
 												)}

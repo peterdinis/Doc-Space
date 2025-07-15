@@ -43,20 +43,20 @@ const LoginForm: FC = () => {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-50">
-			<div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+		<div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-background">
+			<div className="max-w-md w-full space-y-8 p-8 bg-white dark:bg-stone-900 rounded-lg shadow-md">
 				<div className="text-center">
 					<div className="flex justify-center mb-4">
-						<FileText className="h-12 w-12 text-blue-600" />
+						<FileText className="h-12 w-12 text-blue-600 dark:text-amber-50" />
 					</div>
-					<h2 className="text-3xl font-bold text-gray-900">DocSpace</h2>
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-sky-100">DocSpace</h2>
 					<p className="mt-2 text-gray-600">Sign in to your account</p>
 				</div>
 
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					<div className="space-y-4">
 						<div>
-							<Label htmlFor="email" className="text-gray-800">
+							<Label htmlFor="email" className="text-gray-800 dark:text-gray-100">
 								Email address
 							</Label>
 							<Input
@@ -64,7 +64,7 @@ const LoginForm: FC = () => {
 								type="email"
 								placeholder="Enter your email"
 								{...register("email")}
-								className="mt-2 text-gray-800"
+								className="mt-2 text-gray-800 dark:text-gray-100"
 							/>
 							{errors.email && (
 								<p className="text-sm text-red-500 mt-1">
@@ -74,7 +74,7 @@ const LoginForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="password" className="text-gray-800">
+							<Label htmlFor="password" className="text-gray-800 dark:text-gray-100">
 								Password
 							</Label>
 							<div className="relative">
@@ -83,12 +83,12 @@ const LoginForm: FC = () => {
 									type={showPassword ? "text" : "password"}
 									placeholder="Enter your password"
 									{...register("password")}
-									className="mt-2 text-gray-800 pr-10"
+									className="mt-2 text-gray-800 pr-10 dark:text-gray-100"
 								/>
 								<button
 									type="button"
 									onClick={() => setShowPassword(!showPassword)}
-									className="absolute right-3 top-[14px] text-gray-600 hover:text-gray-800"
+									className="absolute right-2 top-[14px] text-gray-600 hover:text-gray-800 dark:text-gray-100"
 									tabIndex={-1}
 								>
 									{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}

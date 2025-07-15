@@ -100,23 +100,6 @@ export const AppSidebar = () => {
 				</SidebarGroup>
 
 				<SidebarGroup>
-					<SidebarGroupLabel
-						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
-						onClick={() => toggleSection("documents")}
-					>
-						<div className="flex items-center">
-							{expandedSections.documents ? (
-								<ChevronDown className="h-4 w-4 mr-1" />
-							) : (
-								<ChevronRight className="h-4 w-4 mr-1" />
-							)}
-							<FileText className="h-4 w-4 mr-2" />
-							{!isCollapsed && <span>Recent Documents</span>}
-						</div>
-					</SidebarGroupLabel>
-				</SidebarGroup>
-
-				<SidebarGroup>
 					<Dialog open={open} onOpenChange={setOpen}>
 						<SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors">
 							<div
@@ -207,7 +190,6 @@ export const AppSidebar = () => {
 													<>
 														<span className="flex-1">{folder.name}</span>
 														<X onClick={() => {
-															console.log("F", folder)
 															deleteFolder.mutate(String(folder?.id!))
 															toast({
 																title: "Folder was deleted",

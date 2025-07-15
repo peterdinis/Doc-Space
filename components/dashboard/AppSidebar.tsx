@@ -52,8 +52,6 @@ export const AppSidebar = () => {
 
 	const isCollapsed = state === "collapsed";
 
-	console.log(user)
-
 	return (
 		<Sidebar className="border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
 			<SidebarHeader className="p-4 border-b border-gray-100 dark:border-gray-700">

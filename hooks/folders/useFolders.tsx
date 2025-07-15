@@ -41,7 +41,6 @@ export function useCreateFolder() {
 	return useMutation<Folder, Error, CreateFolderDto>({
 		mutationKey: ["createFolder"],
 		mutationFn: async (data) => {
-			console.log("D", data)
 			createFolderSchema.parse(data);
 			const res = await api("/folders", {
 				method: "POST",

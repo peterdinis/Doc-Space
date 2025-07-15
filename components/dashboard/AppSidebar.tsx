@@ -144,11 +144,11 @@ export const AppSidebar = () => {
 									const formData = new FormData(form);
 									const folderName =
 										formData.get("folderName")?.toString() || "";
-
 									try {
 										await createFolder.mutateAsync({
 											name: folderName,
-											ownerId: user?.userId!
+											ownerId: user?.userId!,
+											documents: []
 										});
 										toast({
 											title: "Folder created",

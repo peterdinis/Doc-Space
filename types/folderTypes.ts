@@ -3,7 +3,8 @@ import { z } from "zod";
 
 export const createFolderSchema = z.object({
 	name: z.string().min(1, "Name is required"),
-	ownerId: z.string()
+	ownerId: z.string(),
+	documents: z.array(z.any())
 });
 
 export const updateFolderSchema = z.object({

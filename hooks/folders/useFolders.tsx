@@ -1,28 +1,24 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/lib/api";
+import { api, BASE_URL } from "@/lib/api";
 import {
 	type CreateFolderDto,
 	createFolderSchema,
 	type Folder,
-	type FolderListResponse,
-	folderListResponseSchema,
 	folderSchema,
 	type UpdateFolderDto,
 	updateFolderSchema,
 } from "@/types/folderTypes";
 
-export function useFolders(ownerId: string, page = 1, limit = 10) {
-	return useQuery<FolderListResponse>({
+export function useLoggedUserFolders(ownerId: string, page = 1, limit = 10) {
+	return useQuery({
 		queryKey: ["folders", ownerId, page, limit],
-		queryFn: async () => {
-			const res = await api(
-				`/folders?ownerId=${ownerId}&page=${page}&limit=${limit}`,
-			);
-			return folderListResponseSchema.parse(res);
-		},
-	});
+		queryFn: async() => {
+			const res = await fetch(`${BASE_URL}/folders?ownerId=${ownerId}&page=${page}&limit=${limit}`)
+			return res.json()
+		}
+	})
 }
 
 export function useFolder(id: string) {

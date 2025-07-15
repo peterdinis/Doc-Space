@@ -27,6 +27,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useCreateEditor } from "@/hooks/editor/useEditor";
 import { useCreateDocument } from "@/hooks/documents/useCreateDocument";
 import { useMe } from "@/hooks/auth/useAuth";
+import { useToast } from "@/hooks/shared/useToast";
 
 interface TiptapEditorProps {
 	content: string;
@@ -39,28 +40,40 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 
 	const editor = useCreateEditor(content, onChange);
 	const createDocument = useCreateDocument();
-	const {data: user} = useMe()
-
-	if (!editor) return null;
-
+	const { data: user } = useMe()
 	const colors = [
 		"#000000", "#FF0000", "#00FF00", "#0000FF", "#FFFF00",
 		"#FF00FF", "#00FFFF", "#808080", "#800000", "#008000",
 		"#000080", "#808000", "#800080", "#008080",
 	];
 
+	const { toast } = useToast()
+
 	const handleSave = async () => {
 		try {
 			await createDocument.mutateAsync({
 				title,
-				content: editor.getHTML(),
+				content: editor!.getHTML(),
 				userId: user?.userId!
 			});
-			alert("Document created!");
+			toast({
+				title: "New document was created",
+				className: "bg-green-800 text-white font-bold text-xl leading-[125%]",
+				duration: 2000,
+			});
 		} catch (err: any) {
-			alert("Failed to create document: " + err.message);
+			toast({
+				title: "Failed to create document",
+				className: "bg-red-800 text-white font-bold text-xl leading-[125%]",
+				duration: 2000,
+			});
 		}
 	};
+
+
+
+	if (!editor) return null;
+
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-muted shadow-sm">

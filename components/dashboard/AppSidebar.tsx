@@ -8,6 +8,7 @@ import {
 	Loader2,
 	Plus,
 	Users,
+	X,
 } from "lucide-react";
 import Link from "next/link";
 import { Key, useMemo, useState } from "react";
@@ -26,7 +27,7 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useMe } from "@/hooks/auth/useAuth";
-import { useCreateFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
+import { useCreateFolder, useDeleteFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
@@ -42,6 +43,8 @@ export const AppSidebar = () => {
 	}, [user]);
 
 	const { data: folderData, isLoading } = useLoggedUserFolders(userId!);
+
+	const deleteFolder = useDeleteFolder();
 
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
@@ -202,6 +205,7 @@ export const AppSidebar = () => {
 												{!isCollapsed && (
 													<>
 														<span className="flex-1">{folder.name}</span>
+														<X className="cursor-pointer text-red-700 dark:text-red-200" />
 													</>
 												)}
 											</SidebarMenuButton>

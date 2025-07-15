@@ -207,16 +207,18 @@ export const AppSidebar = () => {
 													<>
 														<span className="flex-1">{folder.name}</span>
 														<X onClick={() => {
+															console.log("F", folder)
 															deleteFolder.mutate(String(folder?.id!))
 															toast({
 																title: "Folder was deleted",
 																duration: 2000,
 																className: "bg-green-800 text-white font-bold text-base leading-[130%]"
 															})
-															queryClient.refetchQueries({
+															queryClient.prefetchQuery({
 																queryKey: ["folders"]
 															})
 															window.location.reload()
+															
 														}} className="cursor-pointer text-red-700 dark:text-red-200" />
 													</>
 												)}

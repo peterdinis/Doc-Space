@@ -134,7 +134,7 @@ const DocumentEditor: FC = () => {
 
 					<main className="flex-1 bg-gray-50 dark:bg-gray-900">
 						<div className="bg-white dark:bg-gray-800 min-h-screen shadow-sm">
-							<TiptapEditor content={content} onChange={handleContentChange} />
+							<TiptapEditor title={title} content={content} onChange={handleContentChange} />
 						</div>
 					</main>
 					<ShareDialog

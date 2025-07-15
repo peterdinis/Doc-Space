@@ -31,15 +31,15 @@ import { useMe } from "@/hooks/auth/useAuth";
 interface TiptapEditorProps {
 	content: string;
 	onChange: (content: string) => void;
+	title: string
 }
 
-export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
+export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) => {
 	const [showColorPicker, setShowColorPicker] = useState(false);
-	const [title, setTitle] = useState("Untitled");
 
 	const editor = useCreateEditor(content, onChange);
 	const createDocument = useCreateDocument();
-	const { data: user } = useMe();
+	const {data: user} = useMe()
 
 	if (!editor) return null;
 
@@ -54,7 +54,7 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 			await createDocument.mutateAsync({
 				title,
 				content: editor.getHTML(),
-				userId: user?.userId!,
+				userId: user?.userId!
 			});
 			alert("Document created!");
 		} catch (err: any) {
@@ -65,17 +65,6 @@ export const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
 	return (
 		<div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-muted shadow-sm">
 			<ScrollArea>
-				{/* Title input */}
-				<div className="p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-background rounded-t-lg">
-					<input
-						type="text"
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
-						placeholder="Document Title"
-						className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
-					/>
-				</div>
-
 				{/* Toolbar */}
 				<div className="border-b border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-background rounded-t-lg">
 					<div className="flex flex-wrap items-center gap-2">

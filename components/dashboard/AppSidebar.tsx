@@ -5,11 +5,12 @@ import {
 	ChevronRight,
 	FileText,
 	Folder,
+	Loader2,
 	Plus,
 	Users,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { Key, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,7 +26,7 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useMe } from "@/hooks/auth/useAuth";
-import { useCreateFolder, useFolders } from "@/hooks/folders/useFolders";
+import { useCreateFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
@@ -35,7 +36,13 @@ export const AppSidebar = () => {
 	const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
 	const { toast } = useToast();
 	const { data: user } = useMe();
-	const { data: folderData } = useFolders(user?.id!);
+
+	const userId = useMemo(() => {
+		return user?.userId
+	}, [user]);
+
+	const { data: folderData, isLoading } = useLoggedUserFolders(userId!);
+
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
 		folders: true,
@@ -51,6 +58,8 @@ export const AppSidebar = () => {
 	};
 
 	const isCollapsed = state === "collapsed";
+
+	if (isLoading) return <Loader2 className="animate-spin w-6 h-6" />;
 
 	return (
 		<Sidebar className="border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
@@ -144,16 +153,17 @@ export const AppSidebar = () => {
 									const formData = new FormData(form);
 									const folderName =
 										formData.get("folderName")?.toString() || "";
-
 									try {
-										await createFolder.mutateAsync({
+										await createFolder.mutate({
 											name: folderName,
-											ownerId: user?.id!,
+											ownerId: user?.userId!,
+											documents: []
 										});
 										toast({
 											title: "Folder created",
 											description: `Folder "${folderName}" has been created successfully.`,
 											duration: 2000,
+											className: "bg-green-800 text-white font-bold text-xl"
 										});
 									} catch (err) {
 										toast({
@@ -185,7 +195,7 @@ export const AppSidebar = () => {
 						<SidebarGroupContent className="animate-accordion-down">
 							<SidebarMenu>
 								{folderData &&
-									folderData.data.map((folder) => (
+									folderData.data.map((folder: { id: Key, name: string, documents: unknown[]; }) => (
 										<SidebarMenuItem key={folder.id}>
 											<SidebarMenuButton className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800">
 												<Folder className="h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -195,19 +205,6 @@ export const AppSidebar = () => {
 													</>
 												)}
 											</SidebarMenuButton>
-											{!isCollapsed && folder.documents.length > 0 && (
-												<div className="ml-6 mt-1 space-y-1">
-													{folder.documents.map((doc) => (
-														<Link
-															key={doc.id}
-															href={`/document/${doc.id}`}
-															className="block px-2 py-1 text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded truncate"
-														>
-															{doc.title}
-														</Link>
-													))}
-												</div>
-											)}
 										</SidebarMenuItem>
 									))}
 							</SidebarMenu>
@@ -262,6 +259,8 @@ export const AppSidebar = () => {
 									toast({
 										title: "Connection request sent",
 										description: `Invitation sent to ${email}`,
+										duration: 2000,
+										className: "bg-green-800 text-white font-bold text-base"
 									});
 								}}
 							>

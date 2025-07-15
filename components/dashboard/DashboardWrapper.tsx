@@ -10,12 +10,14 @@ import {
 	PaginationContent,
 	PaginationItem,
 	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
-	SidebarInset,
-	SidebarProvider,
-	SidebarTrigger,
-} from "@/components/ui/sidebar";
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import {
 	Select,
 	SelectContent,
@@ -24,11 +26,12 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
+	SidebarInset,
+	SidebarProvider,
+	SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { useMe } from "@/hooks/auth/useAuth";
+import { useMediaQuery } from "@/hooks/shared/useMediaQuery";
 import DocumentList from "../documents/DocumentList";
 import { AppSidebar } from "./AppSidebar";
 
@@ -38,6 +41,8 @@ const DashboardWrapper: FC = () => {
 	const [page, setPage] = useState(1);
 	const pageCount = 10;
 	const { data: user } = useMe();
+
+	const isMobile = useMediaQuery("(max-width: 640px)");
 
 	return (
 		<SidebarProvider>
@@ -59,9 +64,11 @@ const DashboardWrapper: FC = () => {
 							</div>
 							<div className="flex items-center justify-between">
 								<div className="flex items-center space-x-3">
-									<Button className="flex items-center space-x-2">
-										<Plus className="h-4 w-4" />
-										<Link href="/documents/create">Create document</Link>
+									<Button asChild className="flex items-center space-x-2">
+										<Link href="/documents/create">
+											<Plus className="h-4 w-4" />
+											<span>Create document</span>
+										</Link>
 									</Button>
 								</div>
 							</div>
@@ -113,20 +120,40 @@ const DashboardWrapper: FC = () => {
 						<div className="flex justify-center">
 							<Pagination>
 								<PaginationContent>
-									{Array.from({ length: pageCount }, (_, index) => {
-										const pageNum = index + 1;
-										return (
-											<PaginationItem key={pageNum}>
-												<PaginationLink
-													isActive={page === pageNum}
-													onClick={() => setPage(pageNum)}
-													href="#"
-												>
-													{pageNum}
-												</PaginationLink>
-											</PaginationItem>
-										);
-									})}
+									<PaginationPrevious
+										onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+										href="#"
+									/>
+
+									{isMobile ? (
+										<PaginationItem>
+											<PaginationLink isActive href="#">
+												{page}
+											</PaginationLink>
+										</PaginationItem>
+									) : (
+										Array.from({ length: pageCount }, (_, index) => {
+											const pageNum = index + 1;
+											return (
+												<PaginationItem key={pageNum}>
+													<PaginationLink
+														isActive={page === pageNum}
+														onClick={() => setPage(pageNum)}
+														href="#"
+													>
+														{pageNum}
+													</PaginationLink>
+												</PaginationItem>
+											);
+										})
+									)}
+
+									<PaginationNext
+										onClick={() =>
+											setPage((prev) => Math.min(prev + 1, pageCount))
+										}
+										href="#"
+									/>
 								</PaginationContent>
 							</Pagination>
 						</div>

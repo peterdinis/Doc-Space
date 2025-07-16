@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import {
 	ChevronDown,
 	ChevronRight,
@@ -11,7 +12,7 @@ import {
 	X,
 } from "lucide-react";
 import Link from "next/link";
-import { Key, useMemo, useState } from "react";
+import { type Key, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,10 +28,13 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useMe } from "@/hooks/auth/useAuth";
-import { useCreateFolder, useDeleteFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
+import {
+	useCreateFolder,
+	useDeleteFolder,
+	useLoggedUserFolders,
+} from "@/hooks/folders/useFolders";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { useQueryClient } from "@tanstack/react-query";
 
 export const AppSidebar = () => {
 	const { state } = useSidebar();
@@ -40,7 +44,7 @@ export const AppSidebar = () => {
 	const { data: user } = useMe();
 
 	const userId = useMemo(() => {
-		return user?.userId
+		return user?.userId;
 	}, [user]);
 
 	const { data: folderData, isLoading } = useLoggedUserFolders(userId!);
@@ -144,13 +148,13 @@ export const AppSidebar = () => {
 										await createFolder.mutate({
 											name: folderName,
 											ownerId: user?.userId!,
-											documents: []
+											documents: [],
 										});
 										toast({
 											title: "Folder created",
 											description: `Folder "${folderName}" has been created successfully.`,
 											duration: 2000,
-											className: "bg-green-800 text-white font-bold text-xl"
+											className: "bg-green-800 text-white font-bold text-xl",
 										});
 									} catch (err) {
 										toast({
@@ -182,31 +186,40 @@ export const AppSidebar = () => {
 						<SidebarGroupContent className="animate-accordion-down">
 							<SidebarMenu>
 								{folderData &&
-									folderData.data.map((folder: { id: Key, name: string, documents: unknown[]; }) => (
-										<SidebarMenuItem key={folder.id}>
-											<SidebarMenuButton className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800">
-												<Folder className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-												{!isCollapsed && (
-													<>
-														<span className="flex-1">{folder.name}</span>
-														<X onClick={() => {
-															deleteFolder.mutate(String(folder?.id!))
-															toast({
-																title: "Folder was deleted",
-																duration: 2000,
-																className: "bg-green-800 text-white font-bold text-base leading-[130%]"
-															})
-															queryClient.prefetchQuery({
-																queryKey: ["folders"]
-															})
-															window.location.reload()
-															
-														}} className="cursor-pointer text-red-700 dark:text-red-200" />
-													</>
-												)}
-											</SidebarMenuButton>
-										</SidebarMenuItem>
-									))}
+									folderData.data.map(
+										(folder: {
+											id: Key;
+											name: string;
+											documents: unknown[];
+										}) => (
+											<SidebarMenuItem key={folder.id}>
+												<SidebarMenuButton className="transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800">
+													<Folder className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+													{!isCollapsed && (
+														<>
+															<span className="flex-1">{folder.name}</span>
+															<X
+																onClick={() => {
+																	deleteFolder.mutate(String(folder?.id!));
+																	toast({
+																		title: "Folder was deleted",
+																		duration: 2000,
+																		className:
+																			"bg-green-800 text-white font-bold text-base leading-[130%]",
+																	});
+																	queryClient.prefetchQuery({
+																		queryKey: ["folders"],
+																	});
+																	window.location.reload();
+																}}
+																className="cursor-pointer text-red-700 dark:text-red-200"
+															/>
+														</>
+													)}
+												</SidebarMenuButton>
+											</SidebarMenuItem>
+										),
+									)}
 							</SidebarMenu>
 						</SidebarGroupContent>
 					)}
@@ -260,7 +273,7 @@ export const AppSidebar = () => {
 										title: "Connection request sent",
 										description: `Invitation sent to ${email}`,
 										duration: 2000,
-										className: "bg-green-800 text-white font-bold text-base"
+										className: "bg-green-800 text-white font-bold text-base",
 									});
 								}}
 							>

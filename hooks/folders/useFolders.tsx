@@ -14,11 +14,13 @@ import {
 export function useLoggedUserFolders(ownerId: string, page = 1, limit = 10) {
 	return useQuery({
 		queryKey: ["folders", ownerId, page, limit],
-		queryFn: async() => {
-			const res = await fetch(`${BASE_URL}/folders?ownerId=${ownerId}&page=${page}&limit=${limit}`)
-			return res.json()
-		}
-	})
+		queryFn: async () => {
+			const res = await fetch(
+				`${BASE_URL}/folders?ownerId=${ownerId}&page=${page}&limit=${limit}`,
+			);
+			return res.json();
+		},
+	});
 }
 
 export function useFolder(id: string) {

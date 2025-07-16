@@ -28,6 +28,7 @@ import { useCreateDocument } from "@/hooks/documents/useCreateDocument";
 import { useCreateEditor } from "@/hooks/editor/useEditor";
 import { useToast } from "@/hooks/shared/useToast";
 import { ScrollArea } from "../ui/scroll-area";
+import { useRouter } from "next/navigation";
 
 interface TiptapEditorProps {
 	content: string;
@@ -62,6 +63,7 @@ export const TiptapEditor = ({
 		"#008080",
 	];
 
+	const router = useRouter()
 	const { toast } = useToast();
 
 	const handleSave = async () => {
@@ -76,6 +78,7 @@ export const TiptapEditor = ({
 				className: "bg-green-800 text-white font-bold text-xl leading-[125%]",
 				duration: 2000,
 			});
+			router.push("/dashboard")
 		} catch (err: any) {
 			toast({
 				title: "Failed to create document",

@@ -1,4 +1,3 @@
-// types/folderSchemas.ts
 import { z } from "zod";
 
 export const createFolderSchema = z.object({

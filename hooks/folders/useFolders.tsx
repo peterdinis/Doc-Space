@@ -10,6 +10,7 @@ import {
 	type UpdateFolderDto,
 	updateFolderSchema,
 } from "@/types/folderTypes";
+import { queryClient } from "@/store/query-client";
 
 export function useLoggedUserFolders(ownerId: string, page = 1, limit = 10) {
 	return useQuery({
@@ -35,7 +36,6 @@ export function useFolder(id: string) {
 }
 
 export function useCreateFolder() {
-	const queryClient = useQueryClient();
 	return useMutation<Folder, Error, CreateFolderDto>({
 		mutationKey: ["createFolder"],
 		mutationFn: async (data) => {
@@ -47,12 +47,11 @@ export function useCreateFolder() {
 			return folderSchema.parse(res);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["folders"] });
+			queryClient.prefetchQuery({ queryKey: ["folders"] });
 		},
 	});
 }
 
-// ✏️ PUT: update folder
 export function useUpdateFolder() {
 	const queryClient = useQueryClient();
 	return useMutation<Folder, Error, { id: string; data: UpdateFolderDto }>({

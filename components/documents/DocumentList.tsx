@@ -3,31 +3,47 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Ghost, Loader2 } from "lucide-react";
 import type { FC } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAllUserDocuments } from "@/hooks/documents/useAllUserDocuments"; // Your hook path
+import { useAllUserDocuments } from "@/hooks/documents/useAllUserDocuments";
+import { useMe } from "@/hooks/auth/useAuth";
 
 const containerVariants = {
 	hidden: {},
 	visible: {
 		transition: {
-			staggerChildren: 0.1,
+			staggerChildren: 0.08,
 		},
 	},
 };
 
 const itemVariants = {
-	hidden: { opacity: 0, y: 10 },
+	hidden: { opacity: 0, y: 20 },
 	visible: { opacity: 1, y: 0 },
+	exit: { opacity: 0, y: 20 },
 };
 
 const DocumentList: FC = () => {
-	const { data: documents, isLoading, isError } = useAllUserDocuments();
+	const { data: user } = useMe();
+	const { data: documents, isLoading, isError } = useAllUserDocuments({ userId: user?.userId });
 
-	if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />;
-	if (isError) return <p>Failed to load documents.</p>;
+	if (isLoading)
+		return (
+			<div className="flex justify-center items-center h-32">
+				<Loader2 className="animate-spin w-8 h-8 text-muted-foreground" />
+			</div>
+		);
+
+	if (isError)
+		return (
+			<div className="text-center text-destructive">
+				<p>⚠️ Failed to load documents.</p>
+			</div>
+		);
+
 	if (!documents || documents.length === 0)
 		return (
-			<div className="flex items-center space-x-2 text-muted-foreground">
+			<div className="flex items-center justify-center space-x-2 text-muted-foreground h-32">
 				<Ghost className="animate-bounce w-6 h-6" />
 				<p>No documents found.</p>
 			</div>
@@ -35,7 +51,7 @@ const DocumentList: FC = () => {
 
 	return (
 		<motion.div
-			className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6"
+			className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
 			variants={containerVariants}
 			initial="hidden"
 			animate="visible"
@@ -43,17 +59,26 @@ const DocumentList: FC = () => {
 		>
 			<AnimatePresence>
 				{documents.map((doc) => (
-					<motion.div key={doc.id} variants={itemVariants} layout>
-						<Card className="hover:shadow-lg cursor-pointer transition-shadow duration-200">
-							<CardHeader>
-								<CardTitle>{doc.title}</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-sm text-muted-foreground truncate">
-									{doc.content ?? "No content"}
-								</p>
-							</CardContent>
-						</Card>
+					<motion.div
+						key={doc.id}
+						variants={itemVariants}
+						layout
+						exit="exit"
+						whileHover={{ scale: 1.03 }}
+						transition={{ type: "spring", stiffness: 200, damping: 20 }}
+					>
+						<Link href={`/document/${doc.id}`} className="block h-full">
+							<Card className="h-full w-[300%] transition-shadow shadow-sm hover:shadow-md rounded-2xl border-muted">
+								<CardHeader>
+									<CardTitle className="text-lg font-semibold truncate">
+										{doc.title}
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<p className="text-sm text-blue-600 hover:underline">Detail</p>
+								</CardContent>
+							</Card>
+						</Link>
 					</motion.div>
 				))}
 			</AnimatePresence>

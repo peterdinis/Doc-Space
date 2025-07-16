@@ -49,14 +49,19 @@ const LoginForm: FC = () => {
 					<div className="flex justify-center mb-4">
 						<FileText className="h-12 w-12 text-blue-600 dark:text-amber-50" />
 					</div>
-					<h2 className="text-3xl font-bold text-gray-900 dark:text-sky-100">DocSpace</h2>
+					<h2 className="text-3xl font-bold text-gray-900 dark:text-sky-100">
+						DocSpace
+					</h2>
 					<p className="mt-2 text-gray-600">Sign in to your account</p>
 				</div>
 
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					<div className="space-y-4">
 						<div>
-							<Label htmlFor="email" className="text-gray-800 dark:text-gray-100">
+							<Label
+								htmlFor="email"
+								className="text-gray-800 dark:text-gray-100"
+							>
 								Email address
 							</Label>
 							<Input
@@ -74,7 +79,10 @@ const LoginForm: FC = () => {
 						</div>
 
 						<div>
-							<Label htmlFor="password" className="text-gray-800 dark:text-gray-100">
+							<Label
+								htmlFor="password"
+								className="text-gray-800 dark:text-gray-100"
+							>
 								Password
 							</Label>
 							<div className="relative">

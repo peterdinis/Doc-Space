@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { EditorContent } from "@tiptap/react";
 import {
 	AlignCenter,
@@ -22,45 +21,64 @@ import {
 	Underline as UnderlineIcon,
 	Undo,
 } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "../ui/scroll-area";
-import { useCreateEditor } from "@/hooks/editor/useEditor";
-import { useCreateDocument } from "@/hooks/documents/useCreateDocument";
 import { useMe } from "@/hooks/auth/useAuth";
+import { useCreateDocument } from "@/hooks/documents/useCreateDocument";
+import { useCreateEditor } from "@/hooks/editor/useEditor";
 import { useToast } from "@/hooks/shared/useToast";
+import { ScrollArea } from "../ui/scroll-area";
+import { useRouter } from "next/navigation";
 
 interface TiptapEditorProps {
 	content: string;
 	onChange: (content: string) => void;
-	title: string
+	title: string;
 }
 
-export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) => {
+export const TiptapEditor = ({
+	content,
+	onChange,
+	title,
+}: TiptapEditorProps) => {
 	const [showColorPicker, setShowColorPicker] = useState(false);
 
 	const editor = useCreateEditor(content, onChange);
 	const createDocument = useCreateDocument();
-	const { data: user } = useMe()
+	const { data: user } = useMe();
 	const colors = [
-		"#000000", "#FF0000", "#00FF00", "#0000FF", "#FFFF00",
-		"#FF00FF", "#00FFFF", "#808080", "#800000", "#008000",
-		"#000080", "#808000", "#800080", "#008080",
+		"#000000",
+		"#FF0000",
+		"#00FF00",
+		"#0000FF",
+		"#FFFF00",
+		"#FF00FF",
+		"#00FFFF",
+		"#808080",
+		"#800000",
+		"#008000",
+		"#000080",
+		"#808000",
+		"#800080",
+		"#008080",
 	];
 
-	const { toast } = useToast()
+	const router = useRouter()
+	const { toast } = useToast();
 
 	const handleSave = async () => {
 		try {
 			await createDocument.mutateAsync({
 				title,
 				content: editor!.getHTML(),
-				userId: user?.userId!
+				userId: user?.userId!,
 			});
 			toast({
 				title: "New document was created",
 				className: "bg-green-800 text-white font-bold text-xl leading-[125%]",
 				duration: 2000,
 			});
+			router.push("/dashboard")
 		} catch (err: any) {
 			toast({
 				title: "Failed to create document",
@@ -70,10 +88,7 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 		}
 	};
 
-
-
 	if (!editor) return null;
-
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-muted shadow-sm">
@@ -123,7 +138,9 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 							variant="ghost"
 							size="icon"
 							onClick={() => editor.chain().focus().setTextAlign("left").run()}
-							className={editor.isActive({ textAlign: "left" }) ? "bg-muted" : ""}
+							className={
+								editor.isActive({ textAlign: "left" }) ? "bg-muted" : ""
+							}
 							aria-label="Align Left"
 						>
 							<AlignLeft className="w-4 h-4" />
@@ -131,8 +148,12 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 						<Button
 							variant="ghost"
 							size="icon"
-							onClick={() => editor.chain().focus().setTextAlign("center").run()}
-							className={editor.isActive({ textAlign: "center" }) ? "bg-muted" : ""}
+							onClick={() =>
+								editor.chain().focus().setTextAlign("center").run()
+							}
+							className={
+								editor.isActive({ textAlign: "center" }) ? "bg-muted" : ""
+							}
 							aria-label="Align Center"
 						>
 							<AlignCenter className="w-4 h-4" />
@@ -141,7 +162,9 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 							variant="ghost"
 							size="icon"
 							onClick={() => editor.chain().focus().setTextAlign("right").run()}
-							className={editor.isActive({ textAlign: "right" }) ? "bg-muted" : ""}
+							className={
+								editor.isActive({ textAlign: "right" }) ? "bg-muted" : ""
+							}
 							aria-label="Align Right"
 						>
 							<AlignRight className="w-4 h-4" />
@@ -149,8 +172,12 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 						<Button
 							variant="ghost"
 							size="icon"
-							onClick={() => editor.chain().focus().setTextAlign("justify").run()}
-							className={editor.isActive({ textAlign: "justify" }) ? "bg-muted" : ""}
+							onClick={() =>
+								editor.chain().focus().setTextAlign("justify").run()
+							}
+							className={
+								editor.isActive({ textAlign: "justify" }) ? "bg-muted" : ""
+							}
 							aria-label="Align Justify"
 						>
 							<AlignJustify className="w-4 h-4" />
@@ -224,10 +251,20 @@ export const TiptapEditor = ({ content, onChange, title }: TiptapEditorProps) =>
 								const url = window.prompt("Enter URL:", previousUrl);
 								if (url === null) return;
 								if (url === "") {
-									editor.chain().focus().extendMarkRange("link").unsetLink().run();
+									editor
+										.chain()
+										.focus()
+										.extendMarkRange("link")
+										.unsetLink()
+										.run();
 									return;
 								}
-								editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+								editor
+									.chain()
+									.focus()
+									.extendMarkRange("link")
+									.setLink({ href: url })
+									.run();
 							}}
 							className={editor.isActive("link") ? "bg-muted" : ""}
 							aria-label="Link"

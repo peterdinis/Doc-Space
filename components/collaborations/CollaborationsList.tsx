@@ -1,5 +1,5 @@
+import { Collaborator } from "@/types/documentTypes";
 import { Users } from "lucide-react";
-import type { Collaborator } from "@/types/document";
 
 interface CollaboratorsListProps {
 	collaborators: Collaborator[];

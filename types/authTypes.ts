@@ -6,7 +6,7 @@ export const userSchema = z.object({
 	name: z.string().optional(),
 	createdAt: z.string(),
 	updatedAt: z.string(),
-	userId: z.string()
+	userId: z.string(),
 });
 
 export const authResponseSchema = z.object({

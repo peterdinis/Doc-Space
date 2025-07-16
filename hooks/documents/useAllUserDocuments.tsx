@@ -1,27 +1,29 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useMe } from "@/hooks/auth/useAuth";
 import { api } from "@/lib/api";
 import type { Document } from "@/types/documentTypes";
 
-export function useAllUserDocuments() {
-	const { data: user } = useMe();
+type UseAllUserDocumentsProps = {
+	userId?: string;
+};
+
+export function useAllUserDocuments({ userId }: UseAllUserDocumentsProps) {
 
 	return useQuery<Document[]>({
-		queryKey: ["my-documents", user?.userId],
+		queryKey: ["my-documents", userId],
 		queryFn: async () => {
-			if (!user?.userId) throw new Error("User ID is missing");
+			if (!userId) throw new Error("User ID is missing");
 
 			const token = localStorage.getItem("access_token");
 			if (!token) throw new Error("No access token found");
 
-			return api<Document[]>(`/documents/me/${user.userId}`, {
+			return api<Document[]>(`/user/documents/me/${userId}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
 		},
-		enabled: !!user?.userId,
+		enabled: !!userId
 	});
 }

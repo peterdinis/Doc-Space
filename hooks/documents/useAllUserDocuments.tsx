@@ -18,7 +18,7 @@ export function useAllUserDocuments({ userId }: UseAllUserDocumentsProps) {
 			const token = localStorage.getItem("access_token");
 			if (!token) throw new Error("No access token found");
 
-			return api<Document[]>(`/users/documents/me/${userId}`, {
+			return api<Document[]>(`/user/documents/me/${userId}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},

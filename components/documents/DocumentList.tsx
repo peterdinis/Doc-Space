@@ -5,6 +5,7 @@ import { Ghost, Loader2 } from "lucide-react";
 import type { FC } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAllUserDocuments } from "@/hooks/documents/useAllUserDocuments"; // Your hook path
+import { useMe } from "@/hooks/auth/useAuth";
 
 const containerVariants = {
 	hidden: {},
@@ -21,8 +22,9 @@ const itemVariants = {
 };
 
 const DocumentList: FC = () => {
-	const { data: documents, isLoading, isError } = useAllUserDocuments();
-
+	const {data: user} = useMe()
+	const { data: documents, isLoading, isError } = useAllUserDocuments({ userId: user?.userId });
+	
 	if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />;
 	if (isError) return <p>Failed to load documents.</p>;
 	if (!documents || documents.length === 0)

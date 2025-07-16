@@ -9,19 +9,19 @@ export function useAllUserDocuments() {
 	const { data: user } = useMe();
 
 	return useQuery<Document[]>({
-		queryKey: ["my-documents", user?.id],
+		queryKey: ["my-documents", user?.userId],
 		queryFn: async () => {
-			if (!user?.id) throw new Error("User ID is missing");
+			if (!user?.userId) throw new Error("User ID is missing");
 
 			const token = localStorage.getItem("access_token");
 			if (!token) throw new Error("No access token found");
 
-			return api<Document[]>(`/documents/me/${user.id}`, {
+			return api<Document[]>(`/documents/me/${user.userId}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
 		},
-		enabled: !!user?.id,
+		enabled: !!user?.userId,
 	});
 }

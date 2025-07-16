@@ -8,6 +8,7 @@ import {
 	Loader2,
 	Plus,
 	Users,
+	X,
 } from "lucide-react";
 import Link from "next/link";
 import { Key, useMemo, useState } from "react";
@@ -26,9 +27,10 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useMe } from "@/hooks/auth/useAuth";
-import { useCreateFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
+import { useCreateFolder, useDeleteFolder, useLoggedUserFolders } from "@/hooks/folders/useFolders";
 import { useToast } from "@/hooks/shared/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AppSidebar = () => {
 	const { state } = useSidebar();
@@ -42,6 +44,8 @@ export const AppSidebar = () => {
 	}, [user]);
 
 	const { data: folderData, isLoading } = useLoggedUserFolders(userId!);
+	const queryClient = useQueryClient();
+	const deleteFolder = useDeleteFolder();
 
 	const createFolder = useCreateFolder();
 	const [expandedSections, setExpandedSections] = useState({
@@ -93,23 +97,6 @@ export const AppSidebar = () => {
 							</SidebarMenuItem>
 						</SidebarMenu>
 					</SidebarGroupContent>
-				</SidebarGroup>
-
-				<SidebarGroup>
-					<SidebarGroupLabel
-						className="flex items-center justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1 transition-colors"
-						onClick={() => toggleSection("documents")}
-					>
-						<div className="flex items-center">
-							{expandedSections.documents ? (
-								<ChevronDown className="h-4 w-4 mr-1" />
-							) : (
-								<ChevronRight className="h-4 w-4 mr-1" />
-							)}
-							<FileText className="h-4 w-4 mr-2" />
-							{!isCollapsed && <span>Recent Documents</span>}
-						</div>
-					</SidebarGroupLabel>
 				</SidebarGroup>
 
 				<SidebarGroup>
@@ -202,6 +189,19 @@ export const AppSidebar = () => {
 												{!isCollapsed && (
 													<>
 														<span className="flex-1">{folder.name}</span>
+														<X onClick={() => {
+															deleteFolder.mutate(String(folder?.id!))
+															toast({
+																title: "Folder was deleted",
+																duration: 2000,
+																className: "bg-green-800 text-white font-bold text-base leading-[130%]"
+															})
+															queryClient.prefetchQuery({
+																queryKey: ["folders"]
+															})
+															window.location.reload()
+															
+														}} className="cursor-pointer text-red-700 dark:text-red-200" />
 													</>
 												)}
 											</SidebarMenuButton>

@@ -22,7 +22,7 @@ const Features: FC = () => {
 					<h4 className="text-xl font-semibold text-gray-900 dark:text-sky-100 mb-3">
 						Real-time Editing
 					</h4>
-					<p className="text-gray-600 dark:text-sky-10 mb-4">
+					<p className="text-gray-600 dark:text-sky-100 mb-4">
 						Edit documents together with your team in real-time. See changes as
 						they happen with live cursors.
 					</p>
@@ -42,7 +42,7 @@ const Features: FC = () => {
 					<h4 className="text-xl font-semibold text-gray-900 dark:text-sky-100 mb-3">
 						Team Collaboration
 					</h4>
-					<p className="text-gray-600 mb-4">
+					<p className="text-gray-600 dark:text-sky-100 mb-4">
 						Invite team members and collaborate seamlessly with role-based
 						permissions and comments.
 					</p>
@@ -62,7 +62,7 @@ const Features: FC = () => {
 					<h4 className="text-xl font-semibold text-gray-900 dark:text-sky-100 mb-3">
 						Easy Sharing
 					</h4>
-					<p className="text-gray-600 mb-4">
+					<p className="text-gray-600 dark:text-sky-100 mb-4">
 						Share documents with a simple link and control who can view or edit
 						your content.
 					</p>

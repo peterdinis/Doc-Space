@@ -12,10 +12,10 @@ const Footer: FC = () => {
 						</div>
 						<span className="text-xl font-bold">DocSpace</span>
 					</div>
-					<p className="text-gray-400 mb-4">
+					<p className="text-gray-400 dark:text-sky-100 mb-4">
 						Create, collaborate, and share documents like never before.
 					</p>
-					<div className="text-sm text-gray-500">
+					<div className="text-sm text-gray-500 dark:text-sky-50">
 						© 2025 DocSpace. All rights reserved.
 					</div>
 				</div>

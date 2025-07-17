@@ -8,7 +8,7 @@ const Features: FC = () => {
 				<h3 className="text-3xl font-bold text-gray-900 dark:text-sky-100 mb-4">
 					Everything you need to collaborate
 				</h3>
-				<p className="text-lg text-gray-600 max-w-2xl mx-auto">
+				<p className="text-lg text-gray-600 dark:text-gray-100 max-w-2xl mx-auto">
 					Powerful features designed to make document collaboration seamless and
 					efficient.
 				</p>

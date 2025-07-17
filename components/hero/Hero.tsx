@@ -66,7 +66,6 @@ const Hero: FC = () => {
 							</Button>
 						</div>
 
-						{/* Feature highlights */}
 						<div
 							className="grid grid-cols-3 gap-6 pt-8 animate-fade-in"
 							style={{ animationDelay: "0.3s" }}
@@ -75,19 +74,19 @@ const Hero: FC = () => {
 								<div className="bg-blue-100 p-3 rounded-full w-fit mx-auto mb-2">
 									<Zap className="h-5 w-5 text-blue-600" />
 								</div>
-								<p className="text-sm text-gray-600 font-medium">Real-time</p>
+								<p className="text-sm text-gray-600 dark:text-gray-100 font-medium">Real-time</p>
 							</div>
 							<div className="text-center">
 								<div className="bg-purple-100 p-3 rounded-full w-fit mx-auto mb-2">
 									<Shield className="h-5 w-5 text-purple-600" />
 								</div>
-								<p className="text-sm text-gray-600 font-medium">Secure</p>
+								<p className="text-sm text-gray-600 dark:text-gray-100 font-medium">Secure</p>
 							</div>
 							<div className="text-center">
 								<div className="bg-green-100 p-3 rounded-full w-fit mx-auto mb-2">
 									<Globe className="h-5 w-5 text-green-600" />
 								</div>
-								<p className="text-sm text-gray-600 font-medium">Global</p>
+								<p className="text-sm text-gray-600 dark:text-gray-100 font-medium">Global</p>
 							</div>
 						</div>
 					</div>
@@ -121,27 +120,6 @@ const Hero: FC = () => {
 								style={{ animationDelay: "1s" }}
 							></div>
 						</div>
-					</div>
-				</div>
-				<div
-					className="mt-20 text-center animate-fade-in"
-					style={{ animationDelay: "0.4s" }}
-				>
-					<p className="text-sm text-gray-500 mb-6">Trusted by teams at</p>
-					<div className="flex justify-center items-center space-x-8 opacity-60">
-						<div className="h-8 w-20 bg-gray-300 rounded animate-pulse"></div>
-						<div
-							className="h-8 w-20 bg-gray-300 rounded animate-pulse"
-							style={{ animationDelay: "0.2s" }}
-						></div>
-						<div
-							className="h-8 w-20 bg-gray-300 rounded animate-pulse"
-							style={{ animationDelay: "0.4s" }}
-						></div>
-						<div
-							className="h-8 w-20 bg-gray-300 rounded animate-pulse"
-							style={{ animationDelay: "0.6s" }}
-						></div>
 					</div>
 				</div>
 			</div>

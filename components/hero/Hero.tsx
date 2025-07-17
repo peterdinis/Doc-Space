@@ -17,7 +17,6 @@ const Hero: FC = () => {
 		<>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 				<div className="grid lg:grid-cols-2 gap-12 items-center">
-					{/* Left Column - Content */}
 					<div className="space-y-8 animate-fade-in">
 						<div className="inline-flex items-center bg-gradient-to-r from-blue-100 to-purple-100 rounded-full px-4 py-2 animate-scale-in">
 							<Star className="h-4 w-4 text-blue-600 mr-2" />
@@ -92,13 +91,10 @@ const Hero: FC = () => {
 							</div>
 						</div>
 					</div>
-
-					{/* Right Column - Visual Elements */}
 					<div
 						className="relative animate-scale-in"
 						style={{ animationDelay: "0.2s" }}
 					>
-						{/* Main mockup */}
 						<div className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
 							<div className="bg-gray-100 h-4 w-3/4 rounded mb-4"></div>
 							<div className="bg-gray-200 h-3 w-full rounded mb-2"></div>
@@ -111,8 +107,6 @@ const Hero: FC = () => {
 							</div>
 							<div className="bg-gray-100 h-24 rounded"></div>
 						</div>
-
-						{/* Floating elements */}
 						<div className="absolute -top-4 -right-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full shadow-lg animate-bounce">
 							<span className="text-sm font-medium">99.9% Uptime</span>
 						</div>
@@ -120,8 +114,6 @@ const Hero: FC = () => {
 						<div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full shadow-lg animate-pulse">
 							<span className="text-sm font-medium">Real-time Sync</span>
 						</div>
-
-						{/* Background decoration */}
 						<div className="absolute inset-0 -z-10">
 							<div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-200 rounded-full opacity-20 animate-pulse"></div>
 							<div
@@ -131,8 +123,6 @@ const Hero: FC = () => {
 						</div>
 					</div>
 				</div>
-
-				{/* Trust indicators */}
 				<div
 					className="mt-20 text-center animate-fade-in"
 					style={{ animationDelay: "0.4s" }}

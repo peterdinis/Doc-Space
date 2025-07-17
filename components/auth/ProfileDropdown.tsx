@@ -10,11 +10,10 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useMe } from "@/hooks/auth/useAuth";
 import { useToast } from "@/hooks/shared/useToast";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const ProfileDropdown: FC = () => {
-	const { data: user, isLoading } = useMe();
 	const { toast } = useToast();
 
 	const handleLogout = () => {
@@ -30,7 +29,10 @@ const ProfileDropdown: FC = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				{isLoading ? "..." : (user?.name ?? user?.email ?? "Open")}
+				<Avatar>
+					<AvatarImage src="https://github.com/shadcn.png" />
+					<AvatarFallback>CN</AvatarFallback>
+				</Avatar>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuLabel>

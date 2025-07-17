@@ -1,11 +1,11 @@
-import { QueryCache} from '@tanstack/react-query'
- 
-export const queryCache = new QueryCache({
-  onError: error => {
-    console.log(error);
-  },
+import { QueryCache } from "@tanstack/react-query";
 
-  onSuccess: data => {
-    console.log(data);
-  }
-})
+export const queryCache = new QueryCache({
+	onError: (error) => {
+		console.log(error);
+	},
+
+	onSuccess: (data) => {
+		console.log(data);
+	},
+});

@@ -17,7 +17,6 @@ const Hero: FC = () => {
 		<>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 				<div className="grid lg:grid-cols-2 gap-12 items-center">
-					{/* Left Column - Content */}
 					<div className="space-y-8 animate-fade-in">
 						<div className="inline-flex items-center bg-gradient-to-r from-blue-100 to-purple-100 rounded-full px-4 py-2 animate-scale-in">
 							<Star className="h-4 w-4 text-blue-600 mr-2" />
@@ -67,7 +66,6 @@ const Hero: FC = () => {
 							</Button>
 						</div>
 
-						{/* Feature highlights */}
 						<div
 							className="grid grid-cols-3 gap-6 pt-8 animate-fade-in"
 							style={{ animationDelay: "0.3s" }}
@@ -76,29 +74,26 @@ const Hero: FC = () => {
 								<div className="bg-blue-100 p-3 rounded-full w-fit mx-auto mb-2">
 									<Zap className="h-5 w-5 text-blue-600" />
 								</div>
-								<p className="text-sm text-gray-600 font-medium">Real-time</p>
+								<p className="text-sm text-gray-600 dark:text-gray-100 font-medium">Real-time</p>
 							</div>
 							<div className="text-center">
 								<div className="bg-purple-100 p-3 rounded-full w-fit mx-auto mb-2">
 									<Shield className="h-5 w-5 text-purple-600" />
 								</div>
-								<p className="text-sm text-gray-600 font-medium">Secure</p>
+								<p className="text-sm text-gray-600 dark:text-gray-100 font-medium">Secure</p>
 							</div>
 							<div className="text-center">
 								<div className="bg-green-100 p-3 rounded-full w-fit mx-auto mb-2">
 									<Globe className="h-5 w-5 text-green-600" />
 								</div>
-								<p className="text-sm text-gray-600 font-medium">Global</p>
+								<p className="text-sm text-gray-600 dark:text-gray-100 font-medium">Global</p>
 							</div>
 						</div>
 					</div>
-
-					{/* Right Column - Visual Elements */}
 					<div
 						className="relative animate-scale-in"
 						style={{ animationDelay: "0.2s" }}
 					>
-						{/* Main mockup */}
 						<div className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
 							<div className="bg-gray-100 h-4 w-3/4 rounded mb-4"></div>
 							<div className="bg-gray-200 h-3 w-full rounded mb-2"></div>
@@ -111,8 +106,6 @@ const Hero: FC = () => {
 							</div>
 							<div className="bg-gray-100 h-24 rounded"></div>
 						</div>
-
-						{/* Floating elements */}
 						<div className="absolute -top-4 -right-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full shadow-lg animate-bounce">
 							<span className="text-sm font-medium">99.9% Uptime</span>
 						</div>
@@ -120,8 +113,6 @@ const Hero: FC = () => {
 						<div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full shadow-lg animate-pulse">
 							<span className="text-sm font-medium">Real-time Sync</span>
 						</div>
-
-						{/* Background decoration */}
 						<div className="absolute inset-0 -z-10">
 							<div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-200 rounded-full opacity-20 animate-pulse"></div>
 							<div
@@ -129,29 +120,6 @@ const Hero: FC = () => {
 								style={{ animationDelay: "1s" }}
 							></div>
 						</div>
-					</div>
-				</div>
-
-				{/* Trust indicators */}
-				<div
-					className="mt-20 text-center animate-fade-in"
-					style={{ animationDelay: "0.4s" }}
-				>
-					<p className="text-sm text-gray-500 mb-6">Trusted by teams at</p>
-					<div className="flex justify-center items-center space-x-8 opacity-60">
-						<div className="h-8 w-20 bg-gray-300 rounded animate-pulse"></div>
-						<div
-							className="h-8 w-20 bg-gray-300 rounded animate-pulse"
-							style={{ animationDelay: "0.2s" }}
-						></div>
-						<div
-							className="h-8 w-20 bg-gray-300 rounded animate-pulse"
-							style={{ animationDelay: "0.4s" }}
-						></div>
-						<div
-							className="h-8 w-20 bg-gray-300 rounded animate-pulse"
-							style={{ animationDelay: "0.6s" }}
-						></div>
 					</div>
 				</div>
 			</div>

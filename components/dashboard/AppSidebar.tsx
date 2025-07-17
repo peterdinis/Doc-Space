@@ -197,7 +197,9 @@ export const AppSidebar = () => {
 													<Folder className="h-4 w-4 text-gray-500 dark:text-gray-400" />
 													{!isCollapsed && (
 														<>
-															<Link href={`/folders/${folder.id}`}><span className="flex-1">{folder.name}</span></Link>
+															<Link href={`/folders/${folder.id}`}>
+																<span className="flex-1">{folder.name}</span>
+															</Link>
 															<X
 																onClick={() => {
 																	deleteFolder.mutate(String(folder?.id!));

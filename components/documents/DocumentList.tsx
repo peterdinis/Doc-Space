@@ -51,7 +51,7 @@ const DocumentList: FC = () => {
 
 	return (
 		<motion.div
-			className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+			className="grid grid-cols-2 w-[300%] sm:grid-cols-2 lg:grid-cols-3 gap-4"
 			variants={containerVariants}
 			initial="hidden"
 			animate="visible"
@@ -68,7 +68,7 @@ const DocumentList: FC = () => {
 						transition={{ type: "spring", stiffness: 200, damping: 20 }}
 					>
 						<Link href={`/document/${doc.id}`} className="block h-full">
-							<Card className="h-full w-[300%] transition-shadow shadow-sm hover:shadow-md rounded-2xl border-muted">
+							<Card className="h-full transition-shadow shadow-sm hover:shadow-md rounded-2xl border-muted">
 								<CardHeader>
 									<CardTitle className="text-lg font-semibold truncate">
 										{doc.title}

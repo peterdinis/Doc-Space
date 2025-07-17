@@ -9,7 +9,6 @@ type UseAllUserDocumentsProps = {
 };
 
 export function useAllUserDocuments({ userId }: UseAllUserDocumentsProps) {
-
 	return useQuery<Document[]>({
 		queryKey: ["my-documents", userId],
 		queryFn: async () => {
@@ -24,6 +23,6 @@ export function useAllUserDocuments({ userId }: UseAllUserDocumentsProps) {
 				},
 			});
 		},
-		enabled: !!userId
+		enabled: !!userId,
 	});
 }

@@ -2,11 +2,11 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Ghost, Loader2 } from "lucide-react";
-import type { FC } from "react";
 import Link from "next/link";
+import type { FC } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAllUserDocuments } from "@/hooks/documents/useAllUserDocuments";
 import { useMe } from "@/hooks/auth/useAuth";
+import { useAllUserDocuments } from "@/hooks/documents/useAllUserDocuments";
 
 const containerVariants = {
 	hidden: {},
@@ -25,7 +25,11 @@ const itemVariants = {
 
 const DocumentList: FC = () => {
 	const { data: user } = useMe();
-	const { data: documents, isLoading, isError } = useAllUserDocuments({ userId: user?.userId });
+	const {
+		data: documents,
+		isLoading,
+		isError,
+	} = useAllUserDocuments({ userId: user?.userId });
 
 	if (isLoading)
 		return (
@@ -75,7 +79,9 @@ const DocumentList: FC = () => {
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<p className="text-sm text-blue-600 hover:underline">Detail</p>
+									<p className="text-sm text-blue-600 hover:underline">
+										Detail
+									</p>
 								</CardContent>
 							</Card>
 						</Link>

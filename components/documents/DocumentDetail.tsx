@@ -1,9 +1,7 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 const DocumentDetail: FC = () => {
-    return (
-        <>Document Detail</>
-    )
-}
+	return <>Document Detail</>;
+};
 
-export default DocumentDetail
+export default DocumentDetail;

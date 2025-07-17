@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, BASE_URL } from "@/lib/api";
+import { queryClient } from "@/store/query-client";
 import {
 	type CreateFolderDto,
 	createFolderSchema,
@@ -10,7 +11,6 @@ import {
 	type UpdateFolderDto,
 	updateFolderSchema,
 } from "@/types/folderTypes";
-import { queryClient } from "@/store/query-client";
 
 export function useLoggedUserFolders(ownerId: string, page = 1, limit = 10) {
 	return useQuery({

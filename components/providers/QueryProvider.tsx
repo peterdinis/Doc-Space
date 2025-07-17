@@ -1,9 +1,9 @@
 "use client";
 
-import { queryClient } from "@/store/query-client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { FC, ReactNode } from "react";
+import { queryClient } from "@/store/query-client";
 
 type QueryProviderProps = {
 	children?: ReactNode;

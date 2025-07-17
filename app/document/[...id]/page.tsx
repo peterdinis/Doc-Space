@@ -1,9 +1,7 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const DocumentDetailPage: NextPage = () => {
-    return (
-        <>Document Detail</>
-    )
-}
+	return <>Document Detail</>;
+};
 
-export default DocumentDetailPage
+export default DocumentDetailPage;

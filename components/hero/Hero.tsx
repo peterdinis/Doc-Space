@@ -90,7 +90,7 @@ const fadeUpVariants: Variants = {
 };
 
 const Hero: React.FC<HeroProps> = ({
-  badge = "Doc Spac",
+  badge = "Doc Space",
   title1 = "Collaborate Seamlessly",
   title2 = "Create, Share, and Edit in Real-Time",
 }) => {

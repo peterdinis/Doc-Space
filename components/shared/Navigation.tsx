@@ -26,8 +26,7 @@ const Navigation: FC = () => {
           DocSpace
         </h1>
       </div>
-
-      {/* Hamburger button */}
+	  
       <button
         onClick={toggleMenu}
         className="md:hidden absolute top-6 right-6 z-20 p-2"

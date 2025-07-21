@@ -1,70 +1,23 @@
 'use client'
-import { FC, useState, useRef, useEffect } from 'react';
+
+import { FC, useState} from 'react';
 import {
     Search,
     Bell,
-    ChevronDown,
     Home,
     Users,
     Folder,
     Calendar,
-    User
+    FilePlus,
 } from 'lucide-react';
 import NotificationDropdown from '../dropdowns/NotificationsDropdown';
+import UserProfileDropdown from '../dropdowns/UserProfileDropdown';
 
 
 const Navigation: FC = () => {
     const [activeTab, setActiveTab] = useState('Dashboard');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-    // A static user object for display purposes
-    const user = {
-        email: 'user@example.com',
-        displayName: 'User',
-        photoURL: 'https://placehold.co/100x100/EFEFEF/4A4A4A?text=U'
-    };
-
-    // Effect to handle clicks outside the dropdown to close it
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsUserDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-            }
-        };
-    }, []);
-
-    // Handlers for mouse enter/leave to manage dropdown visibility with a delay
-    const handleMouseEnter = () => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-        setIsUserDropdownOpen(true);
-    };
-
-    const handleMouseLeave = () => {
-        timeoutRef.current = setTimeout(() => {
-            setIsUserDropdownOpen(false);
-        }, 150); // Small delay to prevent flicker
-    };
-
-    // Toggles dropdown on click
-    const handleDropdownClick = () => {
-        setIsUserDropdownOpen(!isUserDropdownOpen);
-    };
-
-    // Navigation items configuration
     const navItems = [
         { name: 'Dashboard', icon: Home },
         { name: 'Team', icon: Users },
@@ -80,7 +33,7 @@ const Navigation: FC = () => {
                         {/* Logo and Desktop Navigation */}
                         <div className="flex items-center space-x-2 sm:space-x-8">
                             <div className="w-8 h-8 bg-gray-900 border border-gray-700 rounded-lg flex items-center justify-center shadow-lg">
-                                <div className="w-4 h-4 bg-white rounded-sm transform rotate-12"></div>
+                                <FilePlus />
                             </div>
 
                             <nav className="hidden lg:flex space-x-1">
@@ -147,66 +100,10 @@ const Navigation: FC = () => {
                                     <div className="text-gray-400 text-sm">No new notifications.</div>
                                 </div>
                             </NotificationDropdown>
-
-                            {/* User Profile Dropdown */}
-                            <div className="relative" ref={dropdownRef}>
-                                <div
-                                    className="flex items-center space-x-1 sm:space-x-3 cursor-pointer hover:bg-gray-900 p-2 rounded-xl transition-all duration-300"
-                                    onMouseEnter={handleMouseEnter}
-                                    onMouseLeave={handleMouseLeave}
-                                    onClick={handleDropdownClick}
-                                >
-                                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-800 flex items-center justify-center border border-gray-700">
-                                        {user.photoURL ? (
-                                            <img
-                                                src={user.photoURL}
-                                                alt="User avatar"
-                                                className="w-full h-full object-cover"
-                                            />
-                                        ) : (
-                                            <User className="h-5 w-5 text-white" />
-                                        )}
-                                    </div>
-                                    <ChevronDown className={`h-4 w-4 text-gray-500 hidden sm:block transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
-                                </div>
-
-                                {/* Dropdown Menu */}
-                                {isUserDropdownOpen && (
-                                    <div
-                                        className="absolute right-0 mt-2 w-64 bg-black border border-gray-800 rounded-xl shadow-2xl py-2 z-50"
-                                        onMouseEnter={handleMouseEnter}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        <div className="px-4 py-3">
-                                            <div className="flex items-center space-x-3">
-                                                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-800 flex items-center justify-center border border-gray-700">
-                                                    {user.photoURL ? (
-                                                        <img
-                                                            src={user.photoURL}
-                                                            alt="User avatar"
-                                                            className="w-full h-full object-cover"
-                                                        />
-                                                    ) : (
-                                                        <User className="h-6 w-6 text-white" />
-                                                    )}
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-white font-medium truncate">
-                                                        {user.displayName || 'User'}
-                                                    </p>
-                                                    <p className="text-gray-400 text-sm truncate">
-                                                        {user.email}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                            <UserProfileDropdown />
                         </div>
                     </div>
 
-                    {/* Mobile Navigation Menu */}
                     {isMobileMenuOpen && (
                         <div className="lg:hidden mt-4 pt-4 border-t border-gray-800">
                             <nav className="grid grid-cols-2 gap-2">
